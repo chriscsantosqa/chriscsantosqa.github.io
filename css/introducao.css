@@ -27,13 +27,23 @@
   left: -2.5rem;
   z-index: -1;
 }
+.introducao a {
+  position: absolute;
+  margin-top: -80px;
+  margin-left: 280px;
+}
 .introducao p {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #525252;
 }
 @media (max-width: 62.5rem) {
   .introducao h1 {
     font-size: 3rem;
+  }
+  .introducao a {
+    position: absolute;
+    margin-top: -70px;
+    margin-left: 180px;
   }
 }
 @media (max-width: 50rem) {
@@ -49,12 +59,22 @@
     height: 0.625rem;
     left: 0px;
   }
+  .introducao a {
+    position: absolute;
+    margin-top: -65px;
+    margin-left: 120px;
+  }
 }
 @media (max-width: 25rem) {
   .introducao {
     grid-template-columns: 1fr;
   }
-  .introducao img {
+  #img-intro {
     display: none;
+  }
+  .introducao a {
+    position: absolute;
+    margin-top: -65px;
+    margin-left: 120px;
   }
 }
