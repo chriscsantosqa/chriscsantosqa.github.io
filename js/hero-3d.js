@@ -21,14 +21,17 @@ var THEMES = {
     wireOpacity: 0.34,
     dissolve: 0x8ef6ff,
     windColors: ['rgba(104, 239, 249, alpha)', 'rgba(151, 136, 224, alpha)'],
-    glow: 'drop-shadow(0 0 18px rgba(110, 243, 255, .22))'
+    glow: 'drop-shadow(0 0 18px rgba(110, 243, 255, .22))',
+    /* Com a textura revelada, a sombra vira o roxo do site (--color-accent). */
+    texGlow: 'drop-shadow(0 0 24px rgba(145, 132, 217, .38))'
   },
   light: {
     wire: 0x0e7490,
     wireOpacity: 0.4,
     dissolve: 0x0e7490,
     windColors: ['rgba(14, 116, 144, alpha)', 'rgba(108, 94, 201, alpha)'],
-    glow: 'drop-shadow(0 0 14px rgba(14, 116, 144, .16))'
+    glow: 'drop-shadow(0 0 14px rgba(14, 116, 144, .16))',
+    texGlow: 'drop-shadow(0 0 20px rgba(108, 94, 201, .3))'
   }
 };
 
@@ -253,6 +256,7 @@ function createHero3D(gltfScene) {
   var modelScale = 0.7;
   var groupY = 0;
   var leftEdgeWorldX = -1.2;
+  var worldPerPx = VISIBLE_H / 720;
 
   function syncPlanes() {
     var pad = modelScale * 0.04;
@@ -278,12 +282,13 @@ function createHero3D(gltfScene) {
   }
 
   /* Partículas de dissolução: fragmentos soltam da malha e voam com o
-     vento até desaparecer na borda esquerda do site. */
+     vento até desaparecer na borda esquerda do site — mesma velocidade
+     e comportamento das partículas do fundo. */
   var dissolve = null;
   var mainGeometry = meshes.length ? meshes[0].geometry : null;
   if (mainGeometry && !reducedMotion && !softwareGL) {
     var positions = mainGeometry.attributes.position;
-    var COUNT = 380;
+    var COUNT = 140;
     var pos = new Float32Array(COUNT * 3);
     var col = new Float32Array(COUNT * 3);
     var data = [];
@@ -298,7 +303,7 @@ function createHero3D(gltfScene) {
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
     var pMat = new THREE.PointsMaterial({
-      size: 0.011,
+      size: 0.007,
       vertexColors: true,
       transparent: true,
       blending: THREE.AdditiveBlending,
@@ -315,10 +320,10 @@ function createHero3D(gltfScene) {
     item.idx = (Math.random() * dissolve.srcPositions.count) | 0;
     tmpVec.fromBufferAttribute(dissolve.srcPositions, item.idx);
     mesh.localToWorld(item.origin.copy(tmpVec));
-    /* Distância até a borda esquerda (com pequena variação) e velocidade
-       constante — a vida é derivada da distância. */
+    /* Distância até a borda esquerda (com pequena variação); a velocidade
+       espelha a faixa das partículas do fundo (14–54 px/s). */
     item.dist = Math.max(0.3, (item.origin.x - leftEdgeWorldX) * (0.92 + Math.random() * 0.16));
-    var speed = 0.3 + Math.random() * 0.28;
+    var speed = (14 + Math.random() * 40) * worldPerPx;
     item.life = item.dist / speed;
     item.t = 0;
   }
@@ -338,7 +343,9 @@ function createHero3D(gltfScene) {
       dissolve.pos[i * 3] = x;
       dissolve.pos[i * 3 + 1] = y;
       dissolve.pos[i * 3 + 2] = z;
-      var fade = Math.sin(Math.min(t, 1) * Math.PI);
+      /* Mesmo fade + cintilação das partículas do fundo. */
+      var flicker = 0.7 + Math.sin(time * 0.002 + item.wob) * 0.3;
+      var fade = Math.sin(Math.min(t, 1) * Math.PI) * flicker;
       dissolve.col[i * 3] = dissolve.baseColor.r * fade;
       dissolve.col[i * 3 + 1] = dissolve.baseColor.g * fade;
       dissolve.col[i * 3 + 2] = dissolve.baseColor.b * fade;
@@ -357,7 +364,7 @@ function createHero3D(gltfScene) {
     camera.aspect = heroRect.width / heroRect.height;
     camera.updateProjectionMatrix();
 
-    var worldPerPx = VISIBLE_H / heroRect.height;
+    worldPerPx = VISIBLE_H / heroRect.height;
     var cx = wrapRect.left - heroRect.left + wrapRect.width / 2;
     var cy = wrapRect.top - heroRect.top + wrapRect.height / 2;
     group.position.x = (cx - heroRect.width / 2) * worldPerPx;
@@ -369,13 +376,19 @@ function createHero3D(gltfScene) {
     syncPlanes();
   }
 
+  /* Sombra do modelo: ciano no wireframe; roxa do site com a textura. */
+  function syncGlow() {
+    var th = THEMES[currentTheme()];
+    canvas.style.filter = revealTarget === 1 ? th.texGlow : th.glow;
+  }
+
   function applyTheme() {
     var th = THEMES[currentTheme()];
     occluderMat.color.copy(bgColor());
     wireMat.color.setHex(th.wire);
     wireMat.opacity = th.wireOpacity;
     if (dissolve) dissolve.baseColor.setHex(th.dissolve);
-    canvas.style.filter = th.glow;
+    syncGlow();
   }
 
   var visible = true;
@@ -425,11 +438,12 @@ function createHero3D(gltfScene) {
 
   /* Hover (desktop) / toque (mobile) controla o preenchimento. */
   if (canHover) {
-    wrap.addEventListener('pointerenter', function () { revealTarget = 1; kickStaticReveal(); });
-    wrap.addEventListener('pointerleave', function () { revealTarget = 0; kickStaticReveal(); });
+    wrap.addEventListener('pointerenter', function () { revealTarget = 1; syncGlow(); kickStaticReveal(); });
+    wrap.addEventListener('pointerleave', function () { revealTarget = 0; syncGlow(); kickStaticReveal(); });
   } else {
     wrap.addEventListener('click', function () {
       revealTarget = revealTarget === 1 ? 0 : 1;
+      syncGlow();
       kickStaticReveal();
     });
   }
