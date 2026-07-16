@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM local com RAG · Case técnico</title>
+  <meta name="description" content="Case interativo e fictício de LLM local com Ollama, FastAPI, RAG em Markdown e aprovação humana.">
+  <meta property="og:title" content="LLM local com RAG · Case técnico">
+  <meta property="og:description" content="Explore a arquitetura, simule consultas e revise uma base de conhecimento fictícia.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/nocturne.css">
+  <link rel="stylesheet" href="../../css/portfolio.css">
+  <link rel="stylesheet" href="../shared/case-common.css">
+  <link rel="stylesheet" href="./llm-rag.css">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+</head>
+<body data-theme="dark">
+  <script>(function(){try{var t=localStorage.getItem('cq-theme');var l=localStorage.getItem('cq-lang');if(t==='light'||t==='dark')document.body.dataset.theme=t;if(l==='en')document.documentElement.lang='en';}catch(e){}})();</script>
+  <div class="case-progress" aria-hidden="true"></div>
+  <header class="case-nav-wrap">
+    <nav class="case-nav" aria-label="Navegação do projeto">
+      <a class="case-brand" href="../../index.html#projetos" aria-label="Voltar ao portfólio">
+        <svg class="case-brand-logo" width="86" height="23" viewBox="0 0 127 34" aria-hidden="true"><use href="../../assets/chris-logo.svg#chris-logo"></use></svg>
+        <span class="case-brand-context" data-i18n="projectCase">case técnico</span>
+      </a>
+      <div class="case-nav-links">
+        <a href="#arquitetura" data-i18n="navArchitecture">Arquitetura</a>
+        <a href="#laboratorio" data-i18n="navLab">Laboratório RAG</a>
+        <a href="#conhecimento" data-i18n="navKnowledge">Conhecimento</a>
+      </div>
+      <div class="case-nav-controls">
+        <div class="lang-switch" role="group" aria-label="Idioma"><button class="lang-btn active" data-lang="pt" type="button" aria-pressed="true">PT</button><button class="lang-btn" data-lang="en" type="button" aria-pressed="false">EN</button></div>
+        <button class="btn btn-icon theme-toggle" type="button" aria-label="Alternar tema"><svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg><svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 14.2A8 8 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"></path></svg></button>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="case-hero" aria-labelledby="case-title">
+      <div class="case-hero-inner">
+        <div>
+          <a class="case-back" href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a>
+          <p class="case-kicker">// <span data-i18n="heroKicker">IA local + RAG</span></p>
+          <h1 id="case-title">LLM local com RAG</h1>
+          <p class="case-hero-lead" data-i18n="heroLead">Uma arquitetura local com dois modelos no Ollama, duas APIs especializadas e uma base RAG em Markdown controlada por revisão humana.</p>
+          <div class="case-tags" aria-label="Tecnologias"><span>Ollama</span><span>Gemma</span><span>Qwen</span><span>FastAPI</span><span>WIQL</span><span>GraphQL</span><span>Markdown RAG</span></div>
+          <div class="case-actions"><a class="btn btn-primary" href="#laboratorio" data-i18n="exploreLab">Abrir laboratório</a><a class="btn btn-secondary" href="#arquitetura" data-i18n="exploreArchitecture">Explorar arquitetura</a></div>
+          <p class="case-note" data-i18n="disclaimer">Todos os nomes, dados, endpoints, documentos e respostas são fictícios. Nenhum serviço real é consultado.</p>
+        </div>
+        <div class="case-visual">
+          <div class="window-bar"><i></i><i></i><i></i><strong>local-ai.workspace</strong></div>
+          <div class="llm-visual">
+            <div class="model-grid"><article class="model-card"><strong>Gemma</strong><span>general analysis · local inference</span></article><article class="model-card"><strong>Qwen</strong><span>structured reasoning · local inference</span></article></div>
+            <div class="mini-flow"><span>Prompt</span><span>FastAPI</span><span>Source</span><span>RAG</span><span>Review</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-metrics"><article><strong>2 LLMs</strong><span data-i18n="metricModels">modelos locais complementares</span></article><article><strong>2 FastAPIs</strong><span data-i18n="metricApis">fontes isoladas por domínio</span></article><article><strong>Human gate</strong><span data-i18n="metricGate">aprovação antes da memória</span></article><article><strong>.md RAG</strong><span data-i18n="metricStorage">conhecimento auditável</span></article></div>
+    </section>
+
+    <section class="case-section reveal">
+      <p class="case-kicker">// <span data-i18n="problemKicker">problema e decisões</span></p><h2 data-i18n="problemTitle">Transformar consultas operacionais em conhecimento reutilizável</h2><p class="section-lead" data-i18n="problemLead">A solução separa acesso a dados, raciocínio do modelo, memória local e aprovação humana para evitar respostas opacas e aprendizado sem controle.</p>
+      <div class="decision-grid"><article class="decision-card"><span>01</span><h3 data-i18n="decisionOneTitle">Modelos locais</h3><p data-i18n="decisionOneText"></p></article><article class="decision-card"><span>02</span><h3 data-i18n="decisionTwoTitle">APIs por domínio</h3><p data-i18n="decisionTwoText"></p></article><article class="decision-card"><span>03</span><h3 data-i18n="decisionThreeTitle">RAG em Markdown</h3><p data-i18n="decisionThreeText"></p></article><article class="decision-card"><span>04</span><h3 data-i18n="decisionFourTitle">Human in the loop</h3><p data-i18n="decisionFourText"></p></article></div>
+    </section>
+
+    <section id="arquitetura" class="case-section reveal">
+      <p class="case-kicker">// <span data-i18n="architectureKicker">mapa interativo</span></p><h2 data-i18n="architectureTitle">Arquitetura e fluxo de confiança</h2><p class="section-lead" data-i18n="architectureLead">Selecione um componente para entender responsabilidade, entrada, saída e limite de segurança.</p>
+      <div class="interactive-shell architecture-board">
+        <div class="architecture-canvas">
+          <button class="arch-node" data-component="ollama" type="button"><em>01</em><strong>Ollama</strong><small>Gemma + Qwen</small></button>
+          <button class="arch-node" data-component="fastapi" type="button"><em>02</em><strong>FastAPI</strong><small>work-items-api / catalog-api</small></button>
+          <button class="arch-node" data-component="source" type="button"><em>03</em><strong>Sources</strong><small>WIQL · REST · GraphQL</small></button>
+          <button class="arch-node" data-component="retrieval" type="button"><em>06</em><strong>RAG retrieval</strong><small>approved notes only</small></button>
+          <button class="arch-node" data-component="gate" type="button"><em>05</em><strong>Human review</strong><small>draft → approved</small></button>
+          <button class="arch-node" data-component="notes" type="button"><em>04</em><strong>Markdown vault</strong><small>local knowledge</small></button>
+        </div>
+        <aside class="architecture-detail"><span>COMPONENT</span><h3 id="arch-detail-title">Ollama</h3><p id="arch-detail-text"></p></aside>
+      </div>
+    </section>
+
+    <section id="laboratorio" class="case-section reveal">
+      <p class="case-kicker">// <span data-i18n="labKicker">simulador local</span></p><h2 data-i18n="labTitle">Laboratório de consulta RAG</h2><p class="section-lead" data-i18n="labLead">Escolha o domínio, o modelo e uma pergunta. A página simula consulta, geração de nota, recuperação de conhecimento aprovado e composição da resposta.</p>
+      <div class="control-row"><div class="control"><span data-i18n="domain">Domínio</span><div class="segmented domain-switch"><button class="segment-btn active" type="button" data-domain="work" data-i18n="workDomain">Artefatos de trabalho</button><button class="segment-btn" type="button" data-domain="catalog" data-i18n="catalogDomain">Catálogo de produtos</button></div></div><label class="control"><span data-i18n="model">Modelo</span><select id="rag-model" class="case-select"><option value="gemma">Gemma</option><option value="qwen">Qwen</option></select></label><label class="control" style="flex:1"><span data-i18n="question">Pergunta</span><select id="rag-question" class="case-select"></select></label><button id="run-rag" class="btn btn-primary" type="button" data-i18n="run">Executar consulta</button><button id="reset-rag" class="btn btn-secondary" type="button" data-i18n="reset">Reiniciar</button></div>
+      <div class="interactive-shell lab-layout">
+        <div class="lab-main">
+          <div class="shell-head"><div><strong id="api-name">work-items-api</strong><small id="source-type">WIQL + REST</small></div><span class="status-pill success"><span class="status-dot success"></span>local mock</span></div>
+          <div class="pipeline"><div class="pipeline-node" data-stage="prompt"><strong>01</strong><span>Prompt</span></div><div class="pipeline-node" data-stage="router"><strong>02</strong><span>Router</span></div><div class="pipeline-node" data-stage="api"><strong>03</strong><span>FastAPI</span></div><div class="pipeline-node" data-stage="source"><strong>04</strong><span>Source</span></div><div class="pipeline-node" data-stage="rag"><strong>05</strong><span>RAG</span></div><div class="pipeline-node" data-stage="model"><strong>06</strong><span>LLM</span></div><div class="pipeline-node" data-stage="review"><strong>07</strong><span>Review</span></div></div>
+          <h3 data-i18n="activity">Atividade simulada</h3><div id="rag-log" class="rag-log" role="log" aria-live="polite"></div>
+        </div>
+        <aside class="lab-side"><div class="lab-state"><span>STATE</span><strong id="rag-state">Aguardando consulta</strong></div><div class="answer-box"><h4 data-i18n="finalAnswer">Resposta consolidada</h4><p id="rag-answer">—</p></div><div class="retrieved-box"><strong data-i18n="retrieved">Notas recuperadas</strong><div id="retrieved-notes" class="retrieved-list"></div></div></aside>
+      </div>
+    </section>
+
+    <section id="conhecimento" class="case-section reveal">
+      <p class="case-kicker">// <span data-i18n="knowledgeKicker">memória controlada</span></p><h2 data-i18n="knowledgeTitle">Base de conhecimento local</h2><p class="section-lead" data-i18n="knowledgeLead">As notas abaixo representam arquivos Markdown fictícios. Apenas conteúdos aprovados participam da recuperação RAG.</p>
+      <div class="knowledge-toolbar"><div class="segmented"><button class="filter-btn active" data-note-filter="all" type="button" data-i18n="all">Todas</button><button class="filter-btn" data-note-filter="approved" type="button" data-i18n="approved">Aprovadas</button><button class="filter-btn" data-note-filter="draft" type="button" data-i18n="drafts">Rascunhos</button></div><div class="memory-summary"><span><strong id="approved-count">0</strong> approved</span><span><strong id="draft-count">0</strong> drafts</span><span id="note-count">0 / 0</span></div></div>
+      <div id="knowledge-list" class="knowledge-list"></div>
+    </section>
+
+    <section class="case-section reveal"><p class="case-kicker">// <span data-i18n="valueKicker">valor entregue</span></p><h2 data-i18n="valueTitle">Por que esta arquitetura é útil</h2><p class="section-lead" data-i18n="valueLead"></p><div class="value-grid"><article class="value-card"><h3 data-i18n="valueOne">Consulta mais rápida</h3><p data-i18n="valueOneText"></p></article><article class="value-card"><h3 data-i18n="valueTwo">Memória explicável</h3><p data-i18n="valueTwoText"></p></article><article class="value-card"><h3 data-i18n="valueThree">Domínios independentes</h3><p data-i18n="valueThreeText"></p></article><article class="value-card"><h3 data-i18n="valueFour">Resposta contextual</h3><p data-i18n="valueFourText"></p></article></div></section>
+  </main>
+  <footer class="case-footer"><div><strong>LLM local com RAG</strong><span data-i18n="footer">Case demonstrativo de LLM local, FastAPI e RAG com aprovação humana.</span></div><a href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a></footer>
+  <script src="./llm-rag.js"></script><script src="../shared/case-common.js"></script>
+</body>
+</html>
