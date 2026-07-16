@@ -286,7 +286,7 @@ function createHero3D(gltfScene) {
      e comportamento das partículas do fundo. */
   var dissolve = null;
   var mainGeometry = meshes.length ? meshes[0].geometry : null;
-  if (mainGeometry && !reducedMotion && !softwareGL) {
+  if (mainGeometry && !reducedMotion) {
     var positions = mainGeometry.attributes.position;
     var COUNT = 140;
     var pos = new Float32Array(COUNT * 3);
@@ -398,11 +398,21 @@ function createHero3D(gltfScene) {
     }, { threshold: 0.02 }).observe(hero);
   }
 
-  var isStatic = reducedMotion || softwareGL;
+  /* A animação só é negada de cara com prefers-reduced-motion. A detecção
+     de GPU por software vira apenas uma dica de qualidade (DPR menor):
+     o loop sempre tenta rodar e mede o custo real dos primeiros frames —
+     se a máquina comprovadamente não der conta, congela num frame
+     estático (halted). Isso evita falsos positivos, como o Chrome
+     reportando SwiftShader com a aceleração de hardware desligada
+     em máquinas que ainda assim animam bem. */
+  var isStatic = reducedMotion;
+  var halted = false;
+  var probe = { n: 0, slow: 0, done: false };
   var last = performance.now();
   var lastRender = 0;
 
   function frame(time) {
+    if (halted) return;
     requestAnimationFrame(frame);
     if (!visible || document.hidden) { last = time; return; }
     if (time - lastRender < 32) return; /* teto de ~30fps */
@@ -412,17 +422,36 @@ function createHero3D(gltfScene) {
     group.rotation.y += dt * 0.28; /* ~16°/s — rotação lenta e contínua */
     updateReveal(dt);
     updateDissolve(dt, time);
+    var t0 = performance.now();
     renderer.render(scene, camera);
+    if (!probe.done) {
+      probe.n++;
+      if (performance.now() - t0 > 40) probe.slow++;
+      if (probe.n >= 14) {
+        probe.done = true;
+        if (probe.slow > 7) {
+          /* Render inviável: congela um frame limpo, sem partículas. */
+          halted = true;
+          if (dissolve) dissolve.points.visible = false;
+          renderer.render(scene, camera);
+        } else if (softwareGL && probe.slow === 0) {
+          /* Detecção era falso positivo e o render é folgado: sobe a
+             resolução para a qualidade normal. */
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+          layout();
+        }
+      }
+    }
   }
 
   function renderOnce() {
     renderer.render(scene, camera);
   }
 
-  /* No modo estático o reveal roda em um mini-loop próprio. */
+  /* No modo estático (ou congelado) o reveal roda em um mini-loop próprio. */
   var staticAnim = false;
   function kickStaticReveal() {
-    if (!isStatic || staticAnim) return;
+    if (!(isStatic || halted) || staticAnim) return;
     staticAnim = true;
     var lastT = performance.now();
     function step(t) {
@@ -455,18 +484,18 @@ function createHero3D(gltfScene) {
   if (window.ResizeObserver) {
     new ResizeObserver(function () {
       layout();
-      if (isStatic) renderOnce();
+      if (isStatic || halted) renderOnce();
     }).observe(hero);
   } else {
     window.addEventListener('resize', function () {
       layout();
-      if (isStatic) renderOnce();
+      if (isStatic || halted) renderOnce();
     }, { passive: true });
   }
 
   new MutationObserver(function () {
     applyTheme();
-    if (isStatic) renderOnce();
+    if (isStatic || halted) renderOnce();
   }).observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
 
   if (isStatic) {
