@@ -1,13 +1,16 @@
 /* Hero 3D — avatar em wireframe holográfico (three.js), rotação lenta,
-   partículas de dissolução, vento global de partículas e wireframes
-   decorativos nas áreas vazias do site. Fallback: img/avatar.jpg. */
+   partículas de dissolução voando até a borda esquerda do site, reveal
+   de textura no hover (scan de preenchimento em sincronia com a rotação),
+   vento global de partículas e wireframes decorativos nas áreas vazias.
+   Fallback: img/avatar.jpg. */
 
 import * as THREE from 'three';
 import { GLTFLoader } from '../vendor/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from '../vendor/meshopt_decoder.module.js';
 
-var MODEL_URL = './models/avatar-wire.glb';
+var MODEL_URL = './models/avatar.glb';
 var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var canHover = window.matchMedia('(hover: hover)').matches;
 
 /* Direção do vento (compartilhada pelo site todo): esquerda, leve subida. */
 var WIND = { x: -1, y: -0.18 };
@@ -17,7 +20,6 @@ var THEMES = {
     wire: 0x6ef3ff,
     wireOpacity: 0.34,
     dissolve: 0x8ef6ff,
-    decor: 'rgba(110, 243, 255, alpha)',
     windColors: ['rgba(104, 239, 249, alpha)', 'rgba(151, 136, 224, alpha)'],
     glow: 'drop-shadow(0 0 18px rgba(110, 243, 255, .22))'
   },
@@ -25,7 +27,6 @@ var THEMES = {
     wire: 0x0e7490,
     wireOpacity: 0.4,
     dissolve: 0x0e7490,
-    decor: 'rgba(14, 116, 144, alpha)',
     windColors: ['rgba(14, 116, 144, alpha)', 'rgba(108, 94, 201, alpha)'],
     glow: 'drop-shadow(0 0 14px rgba(14, 116, 144, .16))'
   }
@@ -35,8 +36,13 @@ function currentTheme() {
   return document.body.dataset.theme === 'light' ? 'light' : 'dark';
 }
 
+function bgColor() {
+  var raw = getComputedStyle(document.body).getPropertyValue('--color-bg').trim();
+  return new THREE.Color(raw || (currentTheme() === 'light' ? '#f2f3f9' : '#161826'));
+}
+
 /* GPU por software (SwiftShader/llvmpipe) não dá conta do loop de render:
-   nesses ambientes o modelo é renderizado uma única vez, estático. */
+   nesses ambientes o modelo é renderizado de forma estática. */
 var softwareGL = (function () {
   try {
     var probe = document.createElement('canvas').getContext('webgl', { failIfMajorPerformanceCaveat: false });
@@ -50,11 +56,6 @@ var softwareGL = (function () {
     return true;
   }
 })();
-
-function bgColor() {
-  var raw = getComputedStyle(document.body).getPropertyValue('--color-bg').trim();
-  return new THREE.Color(raw || (currentTheme() === 'light' ? '#f2f3f9' : '#161826'));
-}
 
 /* ── Vento global: partículas driftando pelo site inteiro ────────────── */
 function createGlobalWind() {
@@ -162,21 +163,35 @@ function createGlobalWind() {
   requestAnimationFrame(frame);
 }
 
-/* ── Hero 3D: wireframe holográfico com rotação e dissolução ─────────── */
+/* ── Hero 3D: wireframe holográfico + reveal de textura no hover ─────── */
 function createHero3D(gltfScene) {
-  var wrap = document.querySelector('.hero-photo-wrap');
-  if (!wrap) return;
+  var hero = document.getElementById('home');
+  var wrap = hero && hero.querySelector('.hero-photo-wrap');
+  if (!hero || !wrap) return;
 
   var canvas = document.createElement('canvas');
   canvas.className = 'hero-model-canvas';
   canvas.setAttribute('aria-hidden', 'true');
-  wrap.appendChild(canvas);
+  hero.appendChild(canvas);
 
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: !softwareGL });
-  renderer.setPixelRatio(softwareGL ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: !softwareGL, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(softwareGL ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.localClippingEnabled = true;
 
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(30, 1, 0.01, 10);
+  camera.position.set(0, 0, 2.4);
+  camera.lookAt(0, 0, 0);
+  var VISIBLE_H = 2 * 2.4 * Math.tan(THREE.MathUtils.degToRad(15)); /* altura do mundo visível em z=0 */
+
+  /* Luzes — só afetam o passe texturizado (imagem 2: key neutra + rim azul). */
+  scene.add(new THREE.HemisphereLight(0xcfd8ff, 0x35306b, 1.4));
+  var key = new THREE.DirectionalLight(0xffffff, 2.2);
+  key.position.set(0.8, 1, 1.4);
+  scene.add(key);
+  var rim = new THREE.DirectionalLight(0x4e8cff, 3);
+  rim.position.set(-1.4, 0.5, -1.2);
+  scene.add(rim);
 
   /* Normaliza o modelo: centraliza e escala para altura 1. */
   var group = new THREE.Group();
@@ -184,67 +199,112 @@ function createHero3D(gltfScene) {
   var box = new THREE.Box3().setFromObject(source);
   var size = box.getSize(new THREE.Vector3());
   var center = box.getCenter(new THREE.Vector3());
-  var scale = 1 / size.y;
   source.position.sub(center);
+  source.scale.setScalar(1 / size.y);
+  source.position.multiplyScalar(1 / size.y);
   group.add(source);
-  group.scale.setScalar(scale);
   scene.add(group);
 
-  camera.position.set(0, 0.03, 2.4);
-  camera.lookAt(0, 0.01, 0);
+  /* Planos de recorte do reveal (scan de baixo para cima, espaço-mundo):
+     abaixo do scan mostra a textura; acima, o holograma wireframe. */
+  var planeTex = new THREE.Plane(new THREE.Vector3(0, -1, 0), -10);   /* mostra y < s */
+  var planeOcc = new THREE.Plane(new THREE.Vector3(0, 1, 0), 10);     /* mostra y > s */
+  var planeWire = new THREE.Plane(new THREE.Vector3(0, 1, 0), 10);    /* mostra y > s - faixa */
 
-  /* Materiais: occluder (cor do fundo, esconde linhas de trás) + wireframe. */
   var theme = THEMES[currentTheme()];
   var occluderMat = new THREE.MeshBasicMaterial({
     color: bgColor(),
     polygonOffset: true,
     polygonOffsetFactor: 1,
-    polygonOffsetUnits: 1
+    polygonOffsetUnits: 1,
+    clippingPlanes: [planeOcc]
   });
   var wireMat = new THREE.MeshBasicMaterial({
     color: theme.wire,
     wireframe: true,
     transparent: true,
     opacity: theme.wireOpacity,
-    depthWrite: false
+    depthWrite: false,
+    clippingPlanes: [planeWire]
   });
 
   var meshes = [];
+  var wireMeshes = [];
+  var texMeshes = [];
   source.traverse(function (node) {
     if (node.isMesh) meshes.push(node);
   });
   meshes.forEach(function (mesh) {
+    var texMat = mesh.material;
+    texMat.clippingPlanes = [planeTex];
     mesh.material = occluderMat;
     var wire = new THREE.Mesh(mesh.geometry, wireMat);
+    var tex = new THREE.Mesh(mesh.geometry, texMat);
+    tex.visible = false; /* o passe texturizado (caro) só liga durante o reveal */
     mesh.add(wire);
+    mesh.add(tex);
+    wireMeshes.push(wire);
+    texMeshes.push(tex);
   });
 
-  /* Partículas de dissolução: fragmentos soltam da malha e seguem o vento. */
+  /* Estado do reveal (0 = wireframe puro, 1 = personagem texturizado). */
+  var reveal = 0;
+  var revealTarget = 0;
+  var modelScale = 0.7;
+  var groupY = 0;
+  var leftEdgeWorldX = -1.2;
+
+  function syncPlanes() {
+    var pad = modelScale * 0.04;
+    var bottom = groupY - modelScale / 2 - pad;
+    var s = bottom + reveal * (modelScale + pad * 2);
+    planeTex.constant = s;
+    planeOcc.constant = -s;
+    planeWire.constant = -(s - modelScale * 0.05);
+  }
+
+  /* Retorna true quando a animação do reveal terminou. */
+  function updateReveal(dt) {
+    var k = revealTarget > reveal ? 2.1 : 2.6;
+    reveal += (revealTarget - reveal) * Math.min(1, dt * k);
+    if (Math.abs(revealTarget - reveal) < 0.003) reveal = revealTarget;
+    syncPlanes();
+    /* Passes fora da janela do scan não são desenhados. */
+    var showTex = reveal > 0.002;
+    var showWire = reveal < 0.998;
+    for (var i = 0; i < texMeshes.length; i++) texMeshes[i].visible = showTex;
+    for (var j = 0; j < wireMeshes.length; j++) wireMeshes[j].visible = showWire;
+    return reveal === revealTarget;
+  }
+
+  /* Partículas de dissolução: fragmentos soltam da malha e voam com o
+     vento até desaparecer na borda esquerda do site. */
   var dissolve = null;
   var mainGeometry = meshes.length ? meshes[0].geometry : null;
   if (mainGeometry && !reducedMotion && !softwareGL) {
     var positions = mainGeometry.attributes.position;
-    var COUNT = 320;
+    var COUNT = 380;
     var pos = new Float32Array(COUNT * 3);
     var col = new Float32Array(COUNT * 3);
     var data = [];
     var baseColor = new THREE.Color(theme.dissolve);
 
     for (var i = 0; i < COUNT; i++) {
-      data.push({ t: Math.random(), life: 2.2 + Math.random() * 3, idx: (Math.random() * positions.count) | 0, wob: Math.random() * Math.PI * 2, origin: new THREE.Vector3() });
+      data.push({ t: 2, dist: 1, life: 4, idx: 0, wob: Math.random() * Math.PI * 2, origin: new THREE.Vector3() });
+      data[i].t = Math.random(); /* espalha o ciclo inicial */
     }
 
     var geo = new THREE.BufferGeometry();
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
     var pMat = new THREE.PointsMaterial({
-      size: 0.012,
+      size: 0.011,
       vertexColors: true,
       transparent: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
-    dissolve = { points: new THREE.Points(geo, pMat), data: data, geo: geo, pos: pos, col: col, srcPositions: positions, baseColor: baseColor, material: pMat };
+    dissolve = { points: new THREE.Points(geo, pMat), data: data, geo: geo, pos: pos, col: col, srcPositions: positions, baseColor: baseColor };
     dissolve.points.frustumCulled = false;
     scene.add(dissolve.points);
   }
@@ -253,10 +313,14 @@ function createHero3D(gltfScene) {
 
   function respawn(item, mesh) {
     item.idx = (Math.random() * dissolve.srcPositions.count) | 0;
-    item.t = 0;
-    item.life = 2.2 + Math.random() * 3;
     tmpVec.fromBufferAttribute(dissolve.srcPositions, item.idx);
     mesh.localToWorld(item.origin.copy(tmpVec));
+    /* Distância até a borda esquerda (com pequena variação) e velocidade
+       constante — a vida é derivada da distância. */
+    item.dist = Math.max(0.3, (item.origin.x - leftEdgeWorldX) * (0.92 + Math.random() * 0.16));
+    var speed = 0.3 + Math.random() * 0.28;
+    item.life = item.dist / speed;
+    item.t = 0;
   }
 
   function updateDissolve(dt, time) {
@@ -267,10 +331,10 @@ function createHero3D(gltfScene) {
       item.t += dt / item.life;
       if (item.t >= 1 || item.origin.lengthSq() === 0) respawn(item, mesh);
       var t = item.t;
-      var drift = t * 0.55;
-      var x = item.origin.x + WIND.x * drift;
-      var y = item.origin.y + (-WIND.y) * drift * 0.6 + Math.sin(time * 0.001 + item.wob) * 0.015 * t;
-      var z = item.origin.z + Math.cos(time * 0.0012 + item.wob) * 0.02 * t;
+      var travelled = item.dist * t;
+      var x = item.origin.x - travelled;
+      var y = item.origin.y + travelled * 0.14 + Math.sin(time * 0.0011 + item.wob) * 0.03 * t;
+      var z = item.origin.z + Math.cos(time * 0.0012 + item.wob) * 0.025 * t;
       dissolve.pos[i * 3] = x;
       dissolve.pos[i * 3 + 1] = y;
       dissolve.pos[i * 3 + 2] = z;
@@ -283,12 +347,26 @@ function createHero3D(gltfScene) {
     dissolve.geo.attributes.color.needsUpdate = true;
   }
 
-  function resize() {
-    var rect = canvas.getBoundingClientRect();
-    if (rect.width < 2 || rect.height < 2) return;
-    renderer.setSize(rect.width, rect.height, false);
-    camera.aspect = rect.width / rect.height;
+  /* O canvas cobre o hero inteiro; o modelo é projetado sobre a moldura
+     da foto e as partículas ganham espaço até a borda esquerda. */
+  function layout() {
+    var heroRect = hero.getBoundingClientRect();
+    var wrapRect = wrap.getBoundingClientRect();
+    if (heroRect.width < 2 || heroRect.height < 2) return;
+    renderer.setSize(heroRect.width, heroRect.height, false);
+    camera.aspect = heroRect.width / heroRect.height;
     camera.updateProjectionMatrix();
+
+    var worldPerPx = VISIBLE_H / heroRect.height;
+    var cx = wrapRect.left - heroRect.left + wrapRect.width / 2;
+    var cy = wrapRect.top - heroRect.top + wrapRect.height / 2;
+    group.position.x = (cx - heroRect.width / 2) * worldPerPx;
+    group.position.y = (heroRect.height / 2 - cy) * worldPerPx;
+    modelScale = wrapRect.height * worldPerPx;
+    group.scale.setScalar(modelScale);
+    groupY = group.position.y;
+    leftEdgeWorldX = -(heroRect.width / 2) * worldPerPx;
+    syncPlanes();
   }
 
   function applyTheme() {
@@ -304,11 +382,13 @@ function createHero3D(gltfScene) {
   if (window.IntersectionObserver) {
     new IntersectionObserver(function (entries) {
       visible = entries[0] ? entries[0].isIntersecting : true;
-    }, { threshold: 0.02 }).observe(wrap);
+    }, { threshold: 0.02 }).observe(hero);
   }
 
+  var isStatic = reducedMotion || softwareGL;
   var last = performance.now();
   var lastRender = 0;
+
   function frame(time) {
     requestAnimationFrame(frame);
     if (!visible || document.hidden) { last = time; return; }
@@ -317,26 +397,57 @@ function createHero3D(gltfScene) {
     last = time;
     lastRender = time;
     group.rotation.y += dt * 0.28; /* ~16°/s — rotação lenta e contínua */
+    updateReveal(dt);
     updateDissolve(dt, time);
     renderer.render(scene, camera);
   }
-
-  var isStatic = reducedMotion || softwareGL;
 
   function renderOnce() {
     renderer.render(scene, camera);
   }
 
-  resize();
+  /* No modo estático o reveal roda em um mini-loop próprio. */
+  var staticAnim = false;
+  function kickStaticReveal() {
+    if (!isStatic || staticAnim) return;
+    staticAnim = true;
+    var lastT = performance.now();
+    function step(t) {
+      var dt = Math.min((t - lastT) / 1000, 0.05);
+      lastT = t;
+      var done = updateReveal(dt * 2); /* transição mais ágil no estático */
+      renderOnce();
+      if (!done) requestAnimationFrame(step);
+      else staticAnim = false;
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* Hover (desktop) / toque (mobile) controla o preenchimento. */
+  if (canHover) {
+    wrap.addEventListener('pointerenter', function () { revealTarget = 1; kickStaticReveal(); });
+    wrap.addEventListener('pointerleave', function () { revealTarget = 0; kickStaticReveal(); });
+  } else {
+    wrap.addEventListener('click', function () {
+      revealTarget = revealTarget === 1 ? 0 : 1;
+      kickStaticReveal();
+    });
+  }
+
+  layout();
   applyTheme();
+  syncPlanes();
 
   if (window.ResizeObserver) {
     new ResizeObserver(function () {
-      resize();
+      layout();
       if (isStatic) renderOnce();
-    }).observe(canvas);
+    }).observe(hero);
   } else {
-    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('resize', function () {
+      layout();
+      if (isStatic) renderOnce();
+    }, { passive: true });
   }
 
   new MutationObserver(function () {
@@ -352,6 +463,7 @@ function createHero3D(gltfScene) {
   }
 
   wrap.classList.add('is-3d-ready');
+  canvas.classList.add('is-on');
 }
 
 /* ── Decorações: metade do rosto em wireframe nas áreas vazias ───────── */
