@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LLM corporativa com RAG · Projeto realizado</title>
-  <meta name="description" content="Experiência real de desenvolvimento de uma LLM local com Ollama, FastAPI, RAG em Markdown e revisão humana. Os dados apresentados são fictícios.">
+  <meta name="description" content="Experiência real de desenvolvimento de uma LLM local com Ollama, OpenWebUI, OpenClaw, FastAPI, agentes, RAG em Markdown e revisão humana. Os dados apresentados são fictícios.">
   <meta property="og:title" content="LLM corporativa com RAG · Projeto realizado">
-  <meta property="og:description" content="Conheça a lógica que apliquei no projeto e interaja com uma representação anonimizada do fluxo de consulta, RAG e aprovação humana.">
+  <meta property="og:description" content="Conheça a lógica que apliquei no projeto e interaja com uma representação anonimizada dos agentes, ferramentas, RAG e controle de acesso.">
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../css/portfolio.css">
   <link rel="stylesheet" href="../shared/case-common.css">
   <link rel="stylesheet" href="./llm-rag.css">
+  <link rel="stylesheet" href="./orchestration.css">
   <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
 </head>
 <body data-theme="dark">
@@ -28,6 +29,7 @@
       </a>
       <div class="case-nav-links">
         <a href="#arquitetura" data-i18n="navArchitecture">Arquitetura</a>
+        <a href="#orquestracao" data-i18n="navOrchestration">Orquestração</a>
         <a href="#laboratorio" data-i18n="navLab">Laboratório RAG</a>
         <a href="#conhecimento" data-i18n="navKnowledge">Conhecimento</a>
       </div>
@@ -43,40 +45,40 @@
       <div class="case-hero-inner">
         <div>
           <a class="case-back" href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a>
-          <p class="case-kicker">// <span data-i18n="heroKicker">experiência com IA local + RAG</span></p>
+          <p class="case-kicker">// <span data-i18n="heroKicker">experiência com IA local + agentes + RAG</span></p>
           <h1 id="case-title">LLM corporativa com RAG</h1>
-          <p class="case-hero-lead" data-i18n="heroLead">Eu desenvolvi este projeto para transformar consultas técnicas e operacionais em uma base de conhecimento local, revisável e reutilizável. A solução combinava Gemma 4 e Qwen no Ollama, duas FastAPIs especializadas e arquivos Markdown aprovados por revisão humana.</p>
-          <div class="case-tags" aria-label="Tecnologias"><span>Ollama</span><span>Gemma 4</span><span>Qwen</span><span>FastAPI</span><span>WIQL</span><span>GraphQL</span><span>Markdown RAG</span></div>
-          <div class="case-actions"><a class="btn btn-primary" href="#laboratorio" data-i18n="exploreLab">Abrir laboratório</a><a class="btn btn-secondary" href="#arquitetura" data-i18n="exploreArchitecture">Explorar arquitetura</a></div>
+          <p class="case-hero-lead" data-i18n="heroLead">Eu desenvolvi este projeto para permitir que usuários autorizados conversassem com agentes especializados e consultassem dados operacionais com segurança. A solução combinava OpenWebUI e OpenClaw como POCs de orquestração, Gemma 4 e Qwen no Ollama, ferramentas próprias em FastAPI e uma memória RAG em Markdown aprovada por revisão humana.</p>
+          <div class="case-tags" aria-label="Tecnologias"><span>OpenWebUI</span><span>OpenClaw</span><span>Ollama</span><span>Gemma 4</span><span>Qwen</span><span>FastAPI</span><span>Docker</span><span>Tailscale</span><span>Markdown RAG</span></div>
+          <div class="case-actions"><a class="btn btn-primary" href="#orquestracao" data-i18n="exploreOrchestration">Explorar agentes</a><a class="btn btn-secondary" href="#laboratorio" data-i18n="exploreLab">Abrir laboratório</a></div>
           <p class="case-note" data-i18n="disclaimer">A experiência apresentada é real. Para preservar a confidencialidade, nomes, dados, endpoints, documentos e respostas foram substituídos por exemplos fictícios. Nenhum serviço real é consultado.</p>
         </div>
         <div class="case-visual">
-          <div class="window-bar"><i></i><i></i><i></i><strong>local-ai.workspace</strong></div>
+          <div class="window-bar"><i></i><i></i><i></i><strong>private-ai.workspace</strong></div>
           <div class="llm-visual">
-            <div class="model-grid"><article class="model-card"><strong>Gemma 4</strong><span>general analysis · local inference</span></article><article class="model-card"><strong>Qwen</strong><span>structured reasoning · local inference</span></article></div>
-            <div class="mini-flow"><span>Prompt</span><span>FastAPI</span><span>Source</span><span>RAG</span><span>Review</span></div>
+            <div class="model-grid"><article class="model-card"><strong>OpenWebUI</strong><span>login · agents · chat tools</span></article><article class="model-card"><strong>OpenClaw</strong><span>agent POC · skills · tool calls</span></article></div>
+            <div class="mini-flow"><span>User</span><span>Orchestrator</span><span>Agent</span><span>FastAPI</span><span>RAG</span><span>Ollama</span></div>
           </div>
         </div>
       </div>
-      <div class="case-metrics"><article><strong>2 LLMs</strong><span data-i18n="metricModels">modelos locais que usei de forma complementar</span></article><article><strong>2 FastAPIs</strong><span data-i18n="metricApis">integrações que separei por domínio</span></article><article><strong>Human gate</strong><span data-i18n="metricGate">aprovação humana antes da memória</span></article><article><strong>.md RAG</strong><span data-i18n="metricStorage">conhecimento legível e auditável</span></article></div>
+      <div class="case-metrics"><article><strong>2 POCs</strong><span data-i18n="metricOrchestrators">orquestradores avaliados no projeto</span></article><article><strong>3 agentes</strong><span data-i18n="metricAgents">personas, skills e ferramentas próprias</span></article><article><strong>Docker + VPN</strong><span data-i18n="metricAccess">acesso restrito por login e Tailscale</span></article><article><strong>Human gate</strong><span data-i18n="metricGate">aprovação antes da memória RAG</span></article></div>
     </section>
 
     <section class="case-section reveal">
       <p class="case-kicker">// <span data-i18n="problemKicker">problema que encontrei</span></p>
-      <h2 data-i18n="problemTitle">Como transformei consultas recorrentes em conhecimento reutilizável</h2>
-      <p class="section-lead" data-i18n="problemLead">Na prática, eu precisava consultar fontes diferentes com rapidez sem transformar a LLM em uma caixa-preta. Também precisava impedir que uma análise ainda não revisada fosse reutilizada como verdade. Por isso separei acesso aos dados, raciocínio do modelo, memória local e aprovação humana.</p>
+      <h2 data-i18n="problemTitle">Como transformei consultas recorrentes em uma experiência segura de chat</h2>
+      <p class="section-lead" data-i18n="problemLead">Eu não precisava apenas conectar uma LLM a endpoints. Era necessário criar uma forma controlada de uso, com login, agentes especializados, ferramentas limitadas por responsabilidade e memória revisada. A arquitetura foi separada para que cada resposta pudesse ser rastreada até o agente, a ferramenta, a fonte e o conhecimento aprovado usado na análise.</p>
       <div class="decision-grid">
-        <article class="decision-card"><span>01</span><h3 data-i18n="decisionOneTitle">Modelos locais</h3><p data-i18n="decisionOneText"></p></article>
-        <article class="decision-card"><span>02</span><h3 data-i18n="decisionTwoTitle">APIs por domínio</h3><p data-i18n="decisionTwoText"></p></article>
-        <article class="decision-card"><span>03</span><h3 data-i18n="decisionThreeTitle">RAG em Markdown</h3><p data-i18n="decisionThreeText"></p></article>
-        <article class="decision-card"><span>04</span><h3 data-i18n="decisionFourTitle">Revisão humana</h3><p data-i18n="decisionFourText"></p></article>
+        <article class="decision-card"><span>01</span><h3 data-i18n="decisionOneTitle">Orquestração com login</h3><p data-i18n="decisionOneText"></p></article>
+        <article class="decision-card"><span>02</span><h3 data-i18n="decisionTwoTitle">Agentes especializados</h3><p data-i18n="decisionTwoText"></p></article>
+        <article class="decision-card"><span>03</span><h3 data-i18n="decisionThreeTitle">Ferramentas via FastAPI</h3><p data-i18n="decisionThreeText"></p></article>
+        <article class="decision-card"><span>04</span><h3 data-i18n="decisionFourTitle">Rede privada e revisão</h3><p data-i18n="decisionFourText"></p></article>
       </div>
     </section>
 
     <section id="arquitetura" class="case-section reveal">
       <p class="case-kicker">// <span data-i18n="architectureKicker">raciocínio de arquitetura</span></p>
       <h2 data-i18n="architectureTitle">Como organizei o fluxo de confiança</h2>
-      <p class="section-lead" data-i18n="architectureLead">O mapa abaixo reproduz a lógica que apliquei no projeto. Cada componente foi separado para deixar claro de onde o dado veio, como foi transformado e em qual ponto a revisão humana era obrigatória.</p>
+      <p class="section-lead" data-i18n="architectureLead">O mapa abaixo mostra a parte de dados e memória. A camada de orquestração apresentada na seção seguinte adicionava login, agentes, skills e ferramentas antes que uma solicitação chegasse às FastAPIs e aos modelos locais.</p>
       <div class="interactive-shell architecture-board">
         <div class="architecture-canvas">
           <button class="arch-node" data-component="ollama" type="button"><em>01</em><strong>Ollama</strong><small>Gemma 4 + Qwen</small></button>
@@ -90,10 +92,77 @@
       </div>
     </section>
 
+    <section id="orquestracao" class="case-section reveal">
+      <p class="case-kicker">// <span data-i18n="orchestrationKicker">orquestração e agentes</span></p>
+      <h2 data-i18n="orchestrationTitle">A camada que transformou modelos e APIs em uma experiência utilizável</h2>
+      <p class="section-lead" data-i18n="orchestrationLead">Eu hospedei OpenWebUI e OpenClaw em containers Docker como provas de conceito. Ambos se conectavam ao Ollama local através da rede privada do Tailscale e exigiam autenticação, permitindo liberar o ambiente apenas para pessoas específicas durante as validações.</p>
+
+      <div class="orchestration-security">
+        <div class="security-flow" aria-label="Fluxo de acesso privado">
+          <span data-i18n="accessUser">Usuário autorizado</span><i>→</i>
+          <span data-i18n="accessLogin">Login do orquestrador</span><i>→</i>
+          <span>Docker</span><i>→</i>
+          <span>Agent + Tools</span><i>→</i>
+          <span>Tailscale</span><i>→</i>
+          <span>Ollama local</span>
+        </div>
+        <div class="security-badges">
+          <span class="status-pill success"><span class="status-dot success"></span><span data-i18n="restrictedAccess">acesso restrito</span></span>
+          <span class="status-pill success"><span class="status-dot success"></span><span data-i18n="privateNetwork">rede privada</span></span>
+          <span class="status-pill warning"><span class="status-dot warning"></span><span data-i18n="pocEnvironment">ambiente de POC</span></span>
+        </div>
+      </div>
+
+      <div class="interactive-shell orchestrator-shell">
+        <aside class="orchestrator-sidebar">
+          <div class="orchestrator-selector">
+            <span data-i18n="orchestratorLabel">Orquestrador</span>
+            <div class="segmented">
+              <button class="segment-btn active" data-orchestrator="openwebui" type="button">OpenWebUI</button>
+              <button class="segment-btn" data-orchestrator="openclaw" type="button">OpenClaw</button>
+            </div>
+          </div>
+          <div id="agent-list" class="agent-list"></div>
+        </aside>
+
+        <section class="agent-workspace">
+          <div class="agent-header">
+            <div>
+              <span id="orchestrator-mode">OpenWebUI · authenticated chat</span>
+              <h3 id="agent-name">Agente Agilista</h3>
+              <p id="agent-purpose"></p>
+            </div>
+            <span class="status-pill success"><span class="status-dot success"></span><span data-i18n="agentReady">agent ready</span></span>
+          </div>
+
+          <div class="agent-capabilities">
+            <article><span>PERSONA</span><p id="agent-persona"></p></article>
+            <article><span>SKILLS</span><div id="agent-skills" class="capability-tags"></div></article>
+            <article><span>KNOWLEDGE</span><div id="agent-knowledge" class="capability-tags"></div></article>
+            <article><span>TOOLS</span><div id="agent-tools" class="capability-tags"></div></article>
+          </div>
+
+          <div class="agent-chat-layout">
+            <div class="agent-chat">
+              <div id="agent-chat-log" class="agent-chat-log" aria-live="polite"></div>
+              <div class="agent-chat-controls">
+                <select id="agent-question" class="case-select"></select>
+                <button id="run-agent" class="btn btn-primary" type="button" data-i18n="sendToAgent">Enviar ao agente</button>
+              </div>
+            </div>
+            <aside class="tool-trace">
+              <div class="shell-head"><strong data-i18n="toolTrace">Rastreamento de ferramentas</strong><small>mock execution</small></div>
+              <ol id="tool-trace-list"></ol>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </section>
+
     <section id="laboratorio" class="case-section reveal">
       <p class="case-kicker">// <span data-i18n="labKicker">experiência interativa</span></p>
       <h2 data-i18n="labTitle">Laboratório de consulta RAG</h2>
-      <p class="section-lead" data-i18n="labLead">Use o simulador para acompanhar a mesma sequência que eu implementei: receber a pergunta, identificar o domínio, consultar a fonte, recuperar notas aprovadas, gerar a análise e registrar um novo rascunho para revisão.</p>
+      <p class="section-lead" data-i18n="labLead">Use o simulador para acompanhar a sequência interna após a ferramenta ser acionada pelo agente: identificar o domínio, consultar a fonte, recuperar notas aprovadas, gerar a análise e registrar um novo rascunho para revisão.</p>
       <div class="control-row"><div class="control"><span data-i18n="domain">Domínio</span><div class="segmented domain-switch"><button class="segment-btn active" type="button" data-domain="work" data-i18n="workDomain">Artefatos de trabalho</button><button class="segment-btn" type="button" data-domain="catalog" data-i18n="catalogDomain">Catálogo de produtos</button></div></div><label class="control"><span data-i18n="model">Modelo</span><select id="rag-model" class="case-select"><option value="gemma">Gemma 4</option><option value="qwen">Qwen</option></select></label><label class="control" style="flex:1"><span data-i18n="question">Pergunta</span><select id="rag-question" class="case-select"></select></label><button id="run-rag" class="btn btn-primary" type="button" data-i18n="run">Executar consulta</button><button id="reset-rag" class="btn btn-secondary" type="button" data-i18n="reset">Reiniciar</button></div>
       <div class="interactive-shell lab-layout">
         <div class="lab-main">
@@ -117,11 +186,11 @@
       <p class="case-kicker">// <span data-i18n="valueKicker">valor que entreguei</span></p>
       <h2 data-i18n="valueTitle">O que essa arquitetura resolveu na prática</h2>
       <p class="section-lead" data-i18n="valueLead"></p>
-      <div class="value-grid"><article class="value-card"><h3 data-i18n="valueOne">Consulta mais rápida</h3><p data-i18n="valueOneText"></p></article><article class="value-card"><h3 data-i18n="valueTwo">Memória explicável</h3><p data-i18n="valueTwoText"></p></article><article class="value-card"><h3 data-i18n="valueThree">Domínios independentes</h3><p data-i18n="valueThreeText"></p></article><article class="value-card"><h3 data-i18n="valueFour">Resposta contextual</h3><p data-i18n="valueFourText"></p></article></div>
+      <div class="value-grid"><article class="value-card"><h3 data-i18n="valueOne">Consulta mais rápida</h3><p data-i18n="valueOneText"></p></article><article class="value-card"><h3 data-i18n="valueTwo">Memória explicável</h3><p data-i18n="valueTwoText"></p></article><article class="value-card"><h3 data-i18n="valueThree">Acesso controlado</h3><p data-i18n="valueThreeText"></p></article><article class="value-card"><h3 data-i18n="valueFour">Agentes especializados</h3><p data-i18n="valueFourText"></p></article></div>
     </section>
   </main>
 
-  <footer class="case-footer"><div><strong>LLM corporativa com RAG</strong><span data-i18n="footer">Projeto que desenvolvi com Ollama, FastAPI, RAG em Markdown e revisão humana. Os dados exibidos são fictícios.</span></div><a href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a></footer>
-  <script src="./llm-rag.js"></script><script src="../shared/case-common.js"></script>
+  <footer class="case-footer"><div><strong>LLM corporativa com RAG</strong><span data-i18n="footer">Projeto que desenvolvi com orquestradores, agentes, Ollama, FastAPI, RAG em Markdown e revisão humana. Os dados exibidos são fictícios.</span></div><a href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a></footer>
+  <script src="./llm-rag.js"></script><script src="./orchestration.js"></script><script src="../shared/case-common.js"></script>
 </body>
 </html>
