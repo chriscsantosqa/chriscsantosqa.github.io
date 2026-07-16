@@ -181,6 +181,16 @@ function createHero3D(gltfScene) {
   renderer.setPixelRatio(softwareGL ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.localClippingEnabled = true;
 
+  /* Se o navegador perder o contexto WebGL (crash do processo de GPU,
+     excesso de contextos), o canvas morreria congelado — nesse caso a
+     foto estática assume o lugar. */
+  canvas.addEventListener('webglcontextlost', function (e) {
+    e.preventDefault();
+    canvas.classList.remove('is-on');
+    wrap.classList.remove('is-3d-ready');
+    wrap.classList.add('is-3d-error');
+  }, false);
+
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera(30, 1, 0.01, 10);
   camera.position.set(0, 0, 2.4);
