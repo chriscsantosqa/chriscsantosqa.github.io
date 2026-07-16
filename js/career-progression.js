@@ -95,7 +95,9 @@ function applyCareerProgression() {
   const role = companyItem.querySelector('.exp-role');
   const currentComponent = companyItem.querySelector('.career-progression');
 
-  if (role) role.textContent = data.role;
+  if (role && role.textContent.trim() !== data.role) {
+    role.textContent = data.role;
+  }
 
   if (currentComponent?.dataset.language === language) return;
 
