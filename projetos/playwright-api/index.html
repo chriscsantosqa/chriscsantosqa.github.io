@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Framework Playwright + C# · Case técnico</title>
-<meta content="Case técnico interativo e totalmente fictício de uma arquitetura de automação de APIs com Playwright, C#, NUnit e Allure." name="description"/>
-<meta content="Framework Playwright + C# · Case técnico" property="og:title"/>
-<meta content="Explore uma arquitetura fictícia, simule uma execução e consulte um relatório demonstrativo inspirado no Allure." property="og:description"/>
-<meta content="website" property="og:type"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="../../css/nocturne.css" rel="stylesheet"/>
-<link href="../../css/portfolio.css" rel="stylesheet"/>
-<link href="./css/playwright-project.css" rel="stylesheet"/>
-<link href="../../favicon.svg" rel="icon" type="image/svg+xml"/>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Framework Playwright + C# · Projeto realizado</title>
+  <meta content="Experiência real de desenvolvimento de um framework de automação de APIs com Playwright, C#, NUnit e Allure. Os dados apresentados são fictícios." name="description">
+  <meta content="Framework Playwright + C# · Projeto realizado" property="og:title">
+  <meta content="Conheça a lógica que apliquei no framework, explore a arquitetura, simule a execução e consulte um relatório anonimizado." property="og:description">
+  <meta content="website" property="og:type">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="../../css/nocturne.css" rel="stylesheet">
+  <link href="../../css/portfolio.css" rel="stylesheet">
+  <link href="./css/playwright-project.css" rel="stylesheet">
+  <link href="../../favicon.svg" rel="icon" type="image/svg+xml">
 </head>
 <body data-theme="dark">
-<script>
+  <script>
     (function () {
       try {
         var theme = localStorage.getItem('cq-theme');
@@ -27,216 +27,236 @@
       } catch (error) {}
     })();
   </script>
-<div aria-hidden="true" class="progress-bar"></div>
-<header class="case-nav-wrap">
-<nav aria-label="Navegação do projeto" class="case-nav">
-<a aria-label="Voltar ao portfólio" class="case-brand" href="../../index.html#projetos">
-<svg aria-hidden="true" class="case-brand-logo" height="23" style="display:block;flex:none;color:var(--color-text)" viewBox="0 0 127 34" width="86"><use href="../../assets/chris-logo.svg#chris-logo"></use></svg>
-<span class="case-brand-context" data-i18n="projectCase">case técnico</span>
-</a>
-<div class="case-nav-links">
-<a data-i18n="navArchitecture" href="#arquitetura">Arquitetura</a>
-<a data-i18n="navExecution" href="#execucao">Execução</a>
-<a data-i18n="navReport" href="#relatorio">Relatório</a>
-</div>
-<div class="case-nav-controls">
-<div aria-label="Idioma" class="lang-switch">
-<button aria-pressed="true" class="lang-btn active" data-lang="pt" type="button">PT</button>
-<button aria-pressed="false" class="lang-btn" data-lang="en" type="button">EN</button>
-</div>
-<button aria-label="Alternar tema" class="btn btn-icon theme-toggle" type="button">
-<svg aria-hidden="true" class="icon-sun" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
-<svg aria-hidden="true" class="icon-moon" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><path d="M20.5 14.2A8 8 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"></path></svg>
-</button>
-</div>
-</nav>
-</header>
-<main>
-<section aria-labelledby="case-title" class="case-hero">
-<div aria-hidden="true" class="case-grid-bg"></div>
-<div class="case-hero-inner">
-<div class="case-hero-copy">
-<a class="case-back" href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a>
-<p class="kicker">// <span data-i18n="heroKicker">automação de API</span></p>
-<h1 id="case-title">Framework Playwright + C#</h1>
-<p class="case-hero-lead" data-i18n="heroLead">Case técnico interativo de uma arquitetura totalmente fictícia para automação de APIs REST e GraphQL.</p>
-<div aria-label="Tecnologias" class="case-tags">
-<span>Playwright</span><span>C#</span><span>.NET 8</span><span>NUnit</span><span>Allure</span><span>REST</span><span>GraphQL</span>
-</div>
-<div class="case-actions">
-<a class="btn btn-primary" href="#arquitetura"><span data-i18n="exploreArchitecture">Explorar arquitetura</span></a>
-<a class="btn btn-secondary" href="#execucao"><span data-i18n="simulateExecution">Simular execução</span></a>
-</div>
-<p class="demo-note"><span aria-hidden="true">●</span> <span data-i18n="sanitizedNote">Todos os nomes, domínios, URLs, payloads e resultados desta página são fictícios. Nenhuma API real é chamada.</span></p>
-</div>
-<div aria-label="Resumo do projeto" class="case-hero-terminal">
-<div class="window-bar"><span></span><span></span><span></span><strong>architecture.summary</strong></div>
-<pre><code><span class="terminal-muted">$</span> dotnet test --filter Smoke
 
-<span class="terminal-info">[mock]</span> ambiente fictício
-<span class="terminal-info">[core]</span> token OAuth simulado
+  <div aria-hidden="true" class="progress-bar"></div>
+
+  <header class="case-nav-wrap">
+    <nav aria-label="Navegação do projeto" class="case-nav">
+      <a aria-label="Voltar ao portfólio" class="case-brand" href="../../index.html#projetos">
+        <svg aria-hidden="true" class="case-brand-logo" height="23" style="display:block;flex:none;color:var(--color-text)" viewBox="0 0 127 34" width="86"><use href="../../assets/chris-logo.svg#chris-logo"></use></svg>
+        <span class="case-brand-context" data-i18n="projectCase">projeto realizado</span>
+      </a>
+      <div class="case-nav-links">
+        <a data-i18n="navArchitecture" href="#arquitetura">Arquitetura</a>
+        <a data-i18n="navExecution" href="#execucao">Execução</a>
+        <a data-i18n="navReport" href="#relatorio">Relatório</a>
+      </div>
+      <div class="case-nav-controls">
+        <div aria-label="Idioma" class="lang-switch">
+          <button aria-pressed="true" class="lang-btn active" data-lang="pt" type="button">PT</button>
+          <button aria-pressed="false" class="lang-btn" data-lang="en" type="button">EN</button>
+        </div>
+        <button aria-label="Alternar tema" class="btn btn-icon theme-toggle" type="button">
+          <svg aria-hidden="true" class="icon-sun" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          <svg aria-hidden="true" class="icon-moon" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><path d="M20.5 14.2A8 8 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"></path></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section aria-labelledby="case-title" class="case-hero">
+      <div aria-hidden="true" class="case-grid-bg"></div>
+      <div class="case-hero-inner">
+        <div class="case-hero-copy">
+          <a class="case-back" href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a>
+          <p class="kicker">// <span data-i18n="heroKicker">experiência em automação de API</span></p>
+          <h1 id="case-title">Framework Playwright + C#</h1>
+          <p class="case-hero-lead" data-i18n="heroLead">Eu construí este framework quando a automação de API começou a crescer e o setup repetido passou a dificultar manutenção, paralelismo e diagnóstico. A estrutura foi organizada com Playwright, C#, NUnit e Allure para suportar REST e GraphQL com responsabilidades bem separadas.</p>
+          <div aria-label="Tecnologias" class="case-tags">
+            <span>Playwright</span><span>C#</span><span>.NET 8</span><span>NUnit</span><span>Allure</span><span>REST</span><span>GraphQL</span>
+          </div>
+          <div class="case-actions">
+            <a class="btn btn-primary" href="#arquitetura"><span data-i18n="exploreArchitecture">Explorar arquitetura</span></a>
+            <a class="btn btn-secondary" href="#execucao"><span data-i18n="simulateExecution">Simular execução</span></a>
+          </div>
+          <p class="demo-note"><span aria-hidden="true">●</span> <span data-i18n="sanitizedNote">A experiência apresentada é real. Para preservar a confidencialidade, nomes, domínios, URLs, payloads e resultados foram substituídos por exemplos fictícios. Nenhuma API real é chamada.</span></p>
+        </div>
+
+        <div aria-label="Resumo do projeto" class="case-hero-terminal">
+          <div class="window-bar"><span></span><span></span><span></span><strong>architecture.summary</strong></div>
+          <pre><code><span class="terminal-muted">$</span> dotnet test --filter Smoke
+
+<span class="terminal-info">[mock]</span> ambiente anonimizado
+<span class="terminal-info">[core]</span> token OAuth com cache
 <span class="terminal-info">[api]</span> contexto por fixture
 <span class="terminal-info">[nunit]</span> execução paralela
 <span class="terminal-pass">[pass]</span> REST + GraphQL
-<span class="terminal-pass">[report]</span> resultado demonstrativo
+<span class="terminal-pass">[report]</span> evidências no Allure
 
 <span class="terminal-muted">status:</span> ready</code></pre>
-</div>
-</div>
-<div aria-label="Características principais" class="case-metrics">
-<article><strong>REST + GraphQL</strong><span data-i18n="metricProtocols">dois protocolos, uma base</span></article>
-<article><strong>Thread-safe</strong><span data-i18n="metricParallel">paralelismo por fixture</span></article>
-<article><strong>OAuth cache</strong><span data-i18n="metricAuth">autenticação centralizada</span></article>
-<article><strong>Allure</strong><span data-i18n="metricReport">diagnóstico rastreável</span></article>
-</div>
-</section>
-<section aria-labelledby="decisions-title" class="case-section">
-<p class="kicker">// <span data-i18n="contextKicker">problema e decisões</span></p>
-<h2 data-i18n="contextTitle" id="decisions-title">Por que a estrutura foi criada desta forma</h2>
-<p class="section-lead" data-i18n="contextLead">A arquitetura reduz repetição, protege a execução paralela e deixa cada falha tecnicamente explicável.</p>
-<div class="decision-grid">
-<article class="decision-card"><span>01</span><h3 data-i18n="decisionOneTitle">Contexto isolado</h3><p data-i18n="decisionOneText">Cada fixture recebe seu próprio APIRequestContext. O token é compartilhado, mas o recurso descartável não.</p></article>
-<article class="decision-card"><span>02</span><h3 data-i18n="decisionTwoTitle">Dados expressivos</h3><p data-i18n="decisionTwoText">Builders criam payloads fictícios válidos por padrão. Cada teste altera somente o campo relevante.</p></article>
-<article class="decision-card"><span>03</span><h3 data-i18n="decisionThreeTitle">Asserts reutilizáveis</h3><p data-i18n="decisionThreeText">Validações repetidas ficam centralizadas, incluindo HTTP, corpo JSON e errors[] do GraphQL.</p></article>
-<article class="decision-card"><span>04</span><h3 data-i18n="decisionFourTitle">Diagnóstico visível</h3><p data-i18n="decisionFourText">Metadados mockados e etapas chegam ao relatório demonstrativo.</p></article>
-</div>
-</section>
-<section aria-labelledby="architecture-title" class="case-section architecture-section" id="arquitetura">
-<div class="section-heading-row">
-<div>
-<p class="kicker">// <span data-i18n="architectureKicker">explorador interativo</span></p>
-<h2 data-i18n="architectureTitle" id="architecture-title">Arquitetura do projeto fictício</h2>
-<p class="section-lead" data-i18n="architectureLead">Expanda as pastas e selecione um arquivo para entender sua responsabilidade, decisão e relação com o fluxo.</p>
-</div>
-<div class="architecture-tools">
-<label class="search-field">
-<span class="sr-only" data-i18n="searchLabel">Buscar arquivo</span>
-<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-<input autocomplete="off" data-i18n-placeholder="searchPlaceholder" id="tree-search" placeholder="Buscar arquivo ou responsabilidade" type="search"/>
-</label>
-</div>
-</div>
-<div aria-label="Filtrar arquitetura" class="filter-row" id="architecture-filters">
-<button class="filter-chip active" data-filter="all" data-i18n="filterAll" type="button">Tudo</button>
-<button class="filter-chip" data-filter="core" type="button">Core</button>
-<button class="filter-chip" data-filter="rest" type="button">REST</button>
-<button class="filter-chip" data-filter="graphql" type="button">GraphQL</button>
-<button class="filter-chip" data-filter="web" type="button">Web</button>
-<button class="filter-chip" data-filter="config" data-i18n="filterConfig" type="button">Configuração</button>
-</div>
-<div class="explorer-shell">
-<aside aria-label="Árvore de arquivos" class="explorer-tree-panel">
-<div class="panel-title"><span data-i18n="projectExplorer">Project Explorer</span><small>Demo.AutomationTests</small></div>
-<div class="file-tree" id="file-tree" role="tree"></div>
-<p class="tree-empty" data-i18n="noFiles" hidden="" id="tree-empty">Nenhum arquivo encontrado.</p>
-</aside>
-<section aria-label="Código demonstrativo" class="code-panel">
-<div class="code-toolbar">
-<span id="code-file-name">TokenProvider.cs</span>
-<span id="code-language">C#</span>
-</div>
-<pre class="code-view" tabindex="0"><code id="code-view"></code></pre>
-</section>
-<aside aria-live="polite" class="details-panel">
-<div class="details-heading">
-<span class="details-kind" id="details-kind">CORE</span>
-<h3 id="details-title">TokenProvider.cs</h3>
-<p id="details-summary"></p>
-</div>
-<dl class="details-list">
-<div><dt data-i18n="responsibility">Responsabilidade</dt><dd id="details-responsibility"></dd></div>
-<div><dt data-i18n="problemSolved">Problema resolvido</dt><dd id="details-problem"></dd></div>
-<div><dt data-i18n="architectureDecision">Decisão arquitetural</dt><dd id="details-decision"></dd></div>
-<div><dt data-i18n="relations">Relações</dt><dd id="details-relations"></dd></div>
-</dl>
-</aside>
-</div>
-<div aria-labelledby="flow-title" class="flow-panel">
-<div class="flow-copy">
-<p class="kicker">// <span data-i18n="flowKicker">fluxo de execução</span></p>
-<h3 data-i18n="flowTitle" id="flow-title">Do ambiente mockado ao relatório</h3>
-<p data-i18n="flowLead">Selecione uma etapa para localizar o componente responsável na árvore.</p>
-</div>
-<div class="execution-flow" id="execution-flow"></div>
-</div>
-</section>
-<section aria-labelledby="execution-title" class="case-section" id="execucao">
-<p class="kicker">// <span data-i18n="executionKicker">execução demonstrativa</span></p>
-<h2 data-i18n="executionTitle" id="execution-title">Simulação visual da suíte</h2>
-<p class="section-lead" data-i18n="executionLead">A simulação usa somente dados fictícios e não se comunica com serviços externos.</p>
-<div class="simulation-toolbar">
-<label>
-<span data-i18n="scenario">Cenário</span>
-<select class="input" id="simulation-mode">
-<option data-i18n="stableRun" value="stable">Execução estável</option>
-<option data-i18n="failureRun" value="failure">Falha demonstrativa</option>
-</select>
-</label>
-<button class="btn btn-primary" id="run-simulation" type="button"><span aria-hidden="true">▶</span> <span data-i18n="runDemo">Executar demonstração</span></button>
-<button class="btn btn-secondary" data-i18n="reset" id="reset-simulation" type="button">Reiniciar</button>
-</div>
-<div class="simulation-layout">
-<div class="terminal-window">
-<div class="window-bar"><span></span><span></span><span></span><strong>dotnet test</strong><em id="simulation-clock">00:00.000</em></div>
-<div aria-label="Saída simulada do terminal" aria-live="polite" class="simulation-terminal" id="simulation-terminal" role="log"></div>
-</div>
-<aside class="simulation-status">
-<div class="status-summary">
-<span data-i18n="currentState">Estado atual</span>
-<strong id="current-state">IDLE</strong>
-<div aria-hidden="true" class="progress-track"><span id="simulation-progress"></span></div>
-</div>
-<ol class="simulation-steps" id="simulation-steps"></ol>
-<div aria-live="polite" class="simulation-result" id="simulation-result">
-<span data-i18n="waitingExecution">Aguardando execução</span>
-</div>
-</aside>
-</div>
-</section>
-<section aria-labelledby="report-title" class="case-section report-section" id="relatorio">
-<p class="kicker">// <span data-i18n="reportKicker">relatório interativo</span></p>
-<h2 data-i18n="reportTitle" id="report-title">Resultado fictício inspirado no Allure</h2>
-<p class="section-lead" data-i18n="reportLead">Filtre resultados mockados e abra um teste para visualizar metadados, etapas e anexos simulados.</p>
-<div class="report-disclaimer"><span aria-hidden="true">ⓘ</span> <span data-i18n="reportDisclaimer">Relatório totalmente fictício. Não representa empresa, produto, ambiente ou execução real.</span></div>
-<div class="allure-shell">
-<aside class="allure-sidebar">
-<div class="allure-brand"><span class="allure-mark">A</span><div><strong>Allure</strong><small>mock report</small></div></div>
-<nav aria-label="Filtros de resultado" class="report-filters" id="report-filters"></nav>
-<div class="suite-heading" data-i18n="suites">Suites</div>
-<div class="suite-list" id="suite-list"></div>
-</aside>
-<div class="allure-content">
-<div class="report-overview">
-<div aria-label="Distribuição dos resultados" class="result-donut" id="result-donut"><div><strong id="donut-total">9</strong><span data-i18n="tests">testes</span></div></div>
-<div class="report-metrics" id="report-metrics"></div>
-</div>
-<div class="report-workspace">
-<section aria-label="Lista de testes" class="test-list-panel">
-<div class="test-list-head"><strong data-i18n="testCases">Casos de teste</strong><span id="visible-test-count"></span></div>
-<div class="test-list" id="test-list"></div>
-</section>
-<section aria-live="polite" class="test-detail-panel">
-<div class="test-detail-head">
-<span class="result-status" id="test-status"></span>
-<h3 id="test-title"></h3>
-<p id="test-suite"></p>
-</div>
-<div class="test-metadata" id="test-metadata"></div>
-<h4 data-i18n="steps">Etapas</h4>
-<ol class="test-steps" id="test-steps"></ol>
-<h4 data-i18n="attachments">Anexos</h4>
-<div class="test-attachments" id="test-attachments"></div>
-</section>
-</div>
-</div>
-</div>
-</section>
-</main>
-<footer class="case-footer">
-<div><strong>Framework Playwright + C#</strong><span data-i18n="footerText">Case técnico com dados integralmente fictícios.</span></div>
-<a href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a>
-</footer>
-<script src="./js/project-data.js"></script>
-<script src="./js/project-app.js"></script>
+        </div>
+      </div>
+
+      <div aria-label="Características principais" class="case-metrics">
+        <article><strong>REST + GraphQL</strong><span data-i18n="metricProtocols">protocolos que reuni na mesma base</span></article>
+        <article><strong>Thread-safe</strong><span data-i18n="metricParallel">isolamento que usei por fixture</span></article>
+        <article><strong>OAuth cache</strong><span data-i18n="metricAuth">token centralizado com controle de concorrência</span></article>
+        <article><strong>Allure</strong><span data-i18n="metricReport">diagnóstico que deixei rastreável</span></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="decisions-title" class="case-section">
+      <p class="kicker">// <span data-i18n="contextKicker">problema que eu precisava resolver</span></p>
+      <h2 data-i18n="contextTitle" id="decisions-title">Por que eu organizei o framework desta forma</h2>
+      <p class="section-lead" data-i18n="contextLead">Meu objetivo era reduzir repetição sem esconder o comportamento dos testes. Eu precisava permitir execução paralela, reutilizar autenticação, criar dados claros e deixar a falha explicável no relatório.</p>
+      <div class="decision-grid">
+        <article class="decision-card"><span>01</span><h3 data-i18n="decisionOneTitle">Contexto isolado</h3><p data-i18n="decisionOneText">Eu dei a cada fixture seu próprio APIRequestContext. O token podia ser compartilhado, mas o recurso descartável não, evitando que uma execução encerrasse o contexto de outra.</p></article>
+        <article class="decision-card"><span>02</span><h3 data-i18n="decisionTwoTitle">Dados expressivos</h3><p data-i18n="decisionTwoText">Eu usei builders com valores válidos por padrão para que o cenário mostrasse somente a alteração responsável pela condição testada.</p></article>
+        <article class="decision-card"><span>03</span><h3 data-i18n="decisionThreeTitle">Asserts reutilizáveis</h3><p data-i18n="decisionThreeText">Eu centralizei validações HTTP, JSON e GraphQL para manter mensagens de falha consistentes e reduzir código repetido.</p></article>
+        <article class="decision-card"><span>04</span><h3 data-i18n="decisionFourTitle">Diagnóstico visível</h3><p data-i18n="decisionFourText">Eu levei etapas, metadados, requests e responses ao Allure para reduzir o tempo entre a falha e a identificação da causa.</p></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="architecture-title" class="case-section architecture-section" id="arquitetura">
+      <div class="section-heading-row">
+        <div>
+          <p class="kicker">// <span data-i18n="architectureKicker">estrutura que desenvolvi</span></p>
+          <h2 data-i18n="architectureTitle" id="architecture-title">Arquitetura do framework</h2>
+          <p class="section-lead" data-i18n="architectureLead">Expanda as pastas e selecione um arquivo para acompanhar as decisões que tomei, o problema que cada componente resolveu e como ele participa da execução.</p>
+        </div>
+        <div class="architecture-tools">
+          <label class="search-field">
+            <span class="sr-only" data-i18n="searchLabel">Buscar arquivo</span>
+            <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input autocomplete="off" data-i18n-placeholder="searchPlaceholder" id="tree-search" placeholder="Buscar arquivo ou responsabilidade" type="search">
+          </label>
+        </div>
+      </div>
+
+      <div aria-label="Filtrar arquitetura" class="filter-row" id="architecture-filters">
+        <button class="filter-chip active" data-filter="all" data-i18n="filterAll" type="button">Tudo</button>
+        <button class="filter-chip" data-filter="core" type="button">Core</button>
+        <button class="filter-chip" data-filter="rest" type="button">REST</button>
+        <button class="filter-chip" data-filter="graphql" type="button">GraphQL</button>
+        <button class="filter-chip" data-filter="web" type="button">Web</button>
+        <button class="filter-chip" data-filter="config" data-i18n="filterConfig" type="button">Configuração</button>
+      </div>
+
+      <div class="explorer-shell">
+        <aside aria-label="Árvore de arquivos" class="explorer-tree-panel">
+          <div class="panel-title"><span data-i18n="projectExplorer">Project Explorer</span><small>Demo.AutomationTests</small></div>
+          <div class="file-tree" id="file-tree" role="tree"></div>
+          <p class="tree-empty" data-i18n="noFiles" hidden id="tree-empty">Nenhum arquivo encontrado.</p>
+        </aside>
+
+        <section aria-label="Código demonstrativo" class="code-panel">
+          <div class="code-toolbar">
+            <span id="code-file-name">TokenProvider.cs</span>
+            <span id="code-language">C#</span>
+          </div>
+          <pre class="code-view" tabindex="0"><code id="code-view"></code></pre>
+        </section>
+
+        <aside aria-live="polite" class="details-panel">
+          <div class="details-heading">
+            <span class="details-kind" id="details-kind">CORE</span>
+            <h3 id="details-title">TokenProvider.cs</h3>
+            <p id="details-summary"></p>
+          </div>
+          <dl class="details-list">
+            <div><dt data-i18n="responsibility">Responsabilidade no projeto</dt><dd id="details-responsibility"></dd></div>
+            <div><dt data-i18n="problemSolved">Problema que resolveu</dt><dd id="details-problem"></dd></div>
+            <div><dt data-i18n="architectureDecision">Decisão que tomei</dt><dd id="details-decision"></dd></div>
+            <div><dt data-i18n="relations">Como se conecta</dt><dd id="details-relations"></dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <div aria-labelledby="flow-title" class="flow-panel">
+        <div class="flow-copy">
+          <p class="kicker">// <span data-i18n="flowKicker">fluxo que implementei</span></p>
+          <h3 data-i18n="flowTitle" id="flow-title">Da configuração ao relatório</h3>
+          <p data-i18n="flowLead">Selecione uma etapa para localizar o componente e entender onde ele entra na execução.</p>
+        </div>
+        <div class="execution-flow" id="execution-flow"></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="execution-title" class="case-section" id="execucao">
+      <p class="kicker">// <span data-i18n="executionKicker">experiência interativa</span></p>
+      <h2 data-i18n="executionTitle" id="execution-title">Simulação visual da suíte</h2>
+      <p class="section-lead" data-i18n="executionLead">A simulação reproduz a sequência que eu estruturava no projeto: preparar ambiente, autenticar, descobrir testes, executar cenários e gerar o relatório. Os dados usados aqui são fictícios.</p>
+      <div class="simulation-toolbar">
+        <label>
+          <span data-i18n="scenario">Cenário</span>
+          <select class="input" id="simulation-mode">
+            <option data-i18n="stableRun" value="stable">Execução estável</option>
+            <option data-i18n="failureRun" value="failure">Falha demonstrativa</option>
+          </select>
+        </label>
+        <button class="btn btn-primary" id="run-simulation" type="button"><span aria-hidden="true">▶</span> <span data-i18n="runDemo">Executar demonstração</span></button>
+        <button class="btn btn-secondary" data-i18n="reset" id="reset-simulation" type="button">Reiniciar</button>
+      </div>
+
+      <div class="simulation-layout">
+        <div class="terminal-window">
+          <div class="window-bar"><span></span><span></span><span></span><strong>dotnet test</strong><em id="simulation-clock">00:00.000</em></div>
+          <div aria-label="Saída simulada do terminal" aria-live="polite" class="simulation-terminal" id="simulation-terminal" role="log"></div>
+        </div>
+        <aside class="simulation-status">
+          <div class="status-summary">
+            <span data-i18n="currentState">Estado atual</span>
+            <strong id="current-state">IDLE</strong>
+            <div aria-hidden="true" class="progress-track"><span id="simulation-progress"></span></div>
+          </div>
+          <ol class="simulation-steps" id="simulation-steps"></ol>
+          <div aria-live="polite" class="simulation-result" id="simulation-result">
+            <span data-i18n="waitingExecution">Aguardando execução</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section aria-labelledby="report-title" class="case-section report-section" id="relatorio">
+      <p class="kicker">// <span data-i18n="reportKicker">como eu analisava o resultado</span></p>
+      <h2 data-i18n="reportTitle" id="report-title">Relatório interativo inspirado no Allure</h2>
+      <p class="section-lead" data-i18n="reportLead">Abra os testes e os anexos para ver o tipo de contexto que eu deixava disponível durante a investigação de uma falha.</p>
+      <div class="report-disclaimer"><span aria-hidden="true">ⓘ</span> <span data-i18n="reportDisclaimer">A estrutura e a experiência são reais, mas o relatório, os testes, os nomes e os resultados exibidos são integralmente fictícios.</span></div>
+
+      <div class="allure-shell">
+        <aside class="allure-sidebar">
+          <div class="allure-brand"><span class="allure-mark">A</span><div><strong>Allure</strong><small>mock report</small></div></div>
+          <nav aria-label="Filtros de resultado" class="report-filters" id="report-filters"></nav>
+          <div class="suite-heading" data-i18n="suites">Suites</div>
+          <div class="suite-list" id="suite-list"></div>
+        </aside>
+
+        <div class="allure-content">
+          <div class="report-overview">
+            <div aria-label="Distribuição dos resultados" class="result-donut" id="result-donut"><div><strong id="donut-total">9</strong><span data-i18n="tests">testes</span></div></div>
+            <div class="report-metrics" id="report-metrics"></div>
+          </div>
+          <div class="report-workspace">
+            <section aria-label="Lista de testes" class="test-list-panel">
+              <div class="test-list-head"><strong data-i18n="testCases">Casos de teste</strong><span id="visible-test-count"></span></div>
+              <div class="test-list" id="test-list"></div>
+            </section>
+            <section aria-live="polite" class="test-detail-panel">
+              <div class="test-detail-head">
+                <span class="result-status" id="test-status"></span>
+                <h3 id="test-title"></h3>
+                <p id="test-suite"></p>
+              </div>
+              <div class="test-metadata" id="test-metadata"></div>
+              <h4 data-i18n="steps">Etapas</h4>
+              <ol class="test-steps" id="test-steps"></ol>
+              <h4 data-i18n="attachments">Anexos</h4>
+              <div class="test-attachments" id="test-attachments"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="case-footer">
+    <div><strong>Framework Playwright + C#</strong><span data-i18n="footerText">Framework que desenvolvi com Playwright, C#, NUnit e Allure. Os dados exibidos são fictícios.</span></div>
+    <a href="../../index.html#projetos">← <span data-i18n="backPortfolio">Voltar aos projetos</span></a>
+  </footer>
+
+  <script src="./js/project-data.js"></script>
+  <script src="./js/experience-copy.js"></script>
+  <script src="./js/project-app.js"></script>
 </body>
 </html>
