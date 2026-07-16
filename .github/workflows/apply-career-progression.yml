@@ -1,0 +1,167 @@
+name: Apply career progression
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-career-progression.yml
+
+permissions:
+  contents: write
+
+jobs:
+  update-career:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add bilingual career progression
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          main_path = Path('js/main.js')
+          content = main_path.read_text(encoding='utf-8')
+
+          replacements = {
+              "expKicker:'trajetória',expTitle:'Experiência',expLead:'Da construção de condições de teste à automação, com foco em entregar produtos de qualidade junto ao time.',":
+              "expKicker:'trajetória',expTitle:'Experiência',expLead:'Da construção de condições de teste à automação, com foco em entregar produtos de qualidade junto ao time.',careerProgressionLabel:'Progressão de carreira',currentRoleLabel:'Atual',",
+              "{year:'2023 — atual',company:'4BIO Medicamentos Especiais',role:'QA Analyst',text:":
+              "{year:'2023 — atual',company:'4BIO Medicamentos Especiais',role:'QA Especialista e Inovações',progression:[{period:'2023 - 2024',title:'QA Trainee'},{period:'2024 - 2025',title:'QA Junior'},{period:'2025 - atual',title:'QA Especialista e Inovações',current:true}],text:",
+              "expKicker:'career',expTitle:'Experience',expLead:'From building test conditions to automation, focused on shipping quality products with the team.',":
+              "expKicker:'career',expTitle:'Experience',expLead:'From building test conditions to automation, focused on shipping quality products with the team.',careerProgressionLabel:'Career progression',currentRoleLabel:'Current',",
+              "{year:'2023 — present',company:'4BIO Medicamentos Especiais',role:'QA Analyst',text:":
+              "{year:'2023 — present',company:'4BIO Medicamentos Especiais',role:'QA Specialist & Innovation',progression:[{period:'2023 - 2024',title:'QA Trainee'},{period:'2024 - 2025',title:'Junior QA Analyst'},{period:'2025 - present',title:'QA Specialist & Innovation',current:true}],text:",
+          }
+
+          for old, new in replacements.items():
+              if old not in content:
+                  raise SystemExit(f'Expected text not found in js/main.js: {old[:90]}')
+              content = content.replace(old, new, 1)
+
+          old_render = "    $('#exp-list').innerHTML=t.experience.map(function(j){var h=j.highlights&&j.highlights.length?'<ul class=\"exp-highlights\">'+j.highlights.map(function(i){return '<li>'+escapeHtml(i)+'</li>'}).join('')+'</ul>':'';return '<div class=\"exp-item\"><div class=\"exp-year\">'+escapeHtml(j.year)+'</div><div><div class=\"exp-head\"><h3>'+escapeHtml(j.company)+'</h3><span class=\"exp-role text-muted\">'+escapeHtml(j.role)+'</span></div><p class=\"exp-text\">'+escapeHtml(j.text)+'</p>'+h+'<div class=\"exp-tags\">'+j.tags.map(function(i){return tag('tag-accent',i)}).join('')+'</div></div></div>'}).join('');"
+          new_render = "    $('#exp-list').innerHTML=t.experience.map(function(j){var h=j.highlights&&j.highlights.length?'<ul class=\"exp-highlights\">'+j.highlights.map(function(i){return '<li>'+escapeHtml(i)+'</li>'}).join('')+'</ul>':'';var progression=j.progression&&j.progression.length?'<section class=\"career-progression\" aria-label=\"'+escapeHtml(t.careerProgressionLabel)+'\"><div class=\"career-progression-head\">'+escapeHtml(t.careerProgressionLabel)+'</div><div class=\"career-steps\">'+j.progression.map(function(step){return '<article class=\"career-step'+(step.current?' current':'')+'\"><span class=\"career-marker\" aria-hidden=\"true\"></span><span class=\"career-period\">'+escapeHtml(step.period)+'</span><strong>'+escapeHtml(step.title)+'</strong>'+(step.current?'<em>'+escapeHtml(t.currentRoleLabel)+'</em>':'')+'</article>'}).join('')+'</div></section>':'';return '<div class=\"exp-item\"><div class=\"exp-year\">'+escapeHtml(j.year)+'</div><div><div class=\"exp-head\"><h3>'+escapeHtml(j.company)+'</h3><span class=\"exp-role text-muted\">'+escapeHtml(j.role)+'</span></div>'+progression+'<p class=\"exp-text\">'+escapeHtml(j.text)+'</p>'+h+'<div class=\"exp-tags\">'+j.tags.map(function(i){return tag('tag-accent',i)}).join('')+'</div></div></div>'}).join('');"
+          if old_render not in content:
+              raise SystemExit('Expected experience renderer not found in js/main.js')
+          content = content.replace(old_render, new_render, 1)
+          main_path.write_text(content, encoding='utf-8')
+
+          css_path = Path('css/portfolio.css')
+          css = css_path.read_text(encoding='utf-8')
+          marker = '/* — progressão de carreira — */'
+          if marker in css:
+              raise SystemExit('Career progression styles already exist')
+
+          css += r'''
+
+/* — progressão de carreira — */
+.career-progression {
+  max-width: 68ch;
+  margin: 14px 0 20px;
+  padding: 16px 18px 18px;
+  border: 1px solid var(--color-divider);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--color-surface) 58%, transparent);
+}
+.career-progression-head {
+  margin-bottom: 16px;
+  color: color-mix(in srgb, var(--color-text) 58%, transparent);
+  font: 600 10px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.career-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.career-steps::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  right: 7px;
+  height: 1px;
+  background: color-mix(in srgb, var(--color-accent) 34%, var(--color-divider));
+}
+.career-step {
+  position: relative;
+  min-width: 0;
+  padding-top: 24px;
+}
+.career-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 13px;
+  height: 13px;
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+.career-step.current .career-marker {
+  background: var(--color-accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--color-accent) 18%, transparent), 0 0 18px color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+.career-period {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-accent);
+  font: 600 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.career-step strong {
+  display: block;
+  color: var(--color-text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.career-step em {
+  display: inline-flex;
+  margin-top: 8px;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 46%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  color: var(--color-accent);
+  font: 600 9px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-style: normal;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .career-progression { padding: 15px 16px 6px; }
+  .career-steps { grid-template-columns: 1fr; gap: 0; }
+  .career-steps::before {
+    top: 6px;
+    bottom: 20px;
+    left: 6px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .career-step { padding: 0 0 22px 28px; }
+  .career-marker { top: 0; left: 0; }
+  .career-period { margin-bottom: 4px; }
+}
+'''
+          css_path.write_text(css, encoding='utf-8')
+          PY
+
+      - name: Validate JavaScript
+        run: node --check js/main.js
+
+      - name: Commit update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/main.js css/portfolio.css
+          git commit -m "feat: adiciona progressão de carreira na 4BIO"
+          git push
