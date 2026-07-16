@@ -165,3 +165,5 @@ jobs:
           git add js/main.js css/portfolio.css
           git commit -m "feat: adiciona progressão de carreira na 4BIO"
           git push
+
+# Triggered through a reviewed pull request.
