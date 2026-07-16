@@ -558,6 +558,11 @@ function buildDecors() {
 function start() {
   createGlobalWind();
 
+  function showPhotoFallback() {
+    var wrap = document.querySelector('.hero-photo-wrap');
+    if (wrap) wrap.classList.add('is-3d-error');
+  }
+
   var loader = new GLTFLoader();
   loader.setMeshoptDecoder(MeshoptDecoder);
   loader.load(MODEL_URL, function (gltf) {
@@ -567,11 +572,9 @@ function start() {
       buildDecors();
       new MutationObserver(buildDecors).observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
     } catch (err) {
-      /* Mantém a foto estática como fallback. */
+      showPhotoFallback();
     }
-  }, undefined, function () {
-    /* Falha de rede/decodificação: a foto estática permanece. */
-  });
+  }, undefined, showPhotoFallback);
 }
 
 if (document.readyState === 'loading') {

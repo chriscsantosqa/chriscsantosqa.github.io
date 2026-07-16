@@ -159,7 +159,10 @@ body[data-theme="light"] .wind-canvas { opacity: .55; }
 }
 .hero-model-canvas.is-on { opacity: 1; transform: none; }
 .hero-inner { z-index: 2; }
-.hero-photo-wrap.is-3d-ready .hero-photo { opacity: 0; }
+/* A foto estática não aparece no carregamento — o hero já nasce 3D;
+   ela só retorna como fallback se o 3D falhar (ou sem JavaScript). */
+.hero-photo { opacity: 0; }
+.hero-photo-wrap.is-3d-error .hero-photo { opacity: 1; }
 .corner { position: absolute; width: 30px; height: 30px; pointer-events: none; z-index: 3; }
 .corner-tl { top: -11px; left: -11px; border-top: 2px solid var(--color-accent); border-left: 2px solid var(--color-accent); border-radius: 8px 0 0 0; }
 .corner-tr { top: -11px; right: -11px; border-top: 2px solid var(--color-accent); border-right: 2px solid var(--color-accent); border-radius: 0 8px 0 0; }
