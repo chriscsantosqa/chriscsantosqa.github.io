@@ -1,181 +1,396 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QA. Chris</title>
-  <meta name="description" content="QA Analyst Localizado em Araçatuba-SP">
-  <link rel="stylesheet" href="./css/style.css">
+  <title>Christopher C. Santos · QA Analyst</title>
+  <meta name="description" content="Analista de QA — testes funcionais, exploratórios, automação e APIs. Araçatuba-SP, Brasil.">
+  <meta property="og:title" content="Christopher C. Santos · QA Analyst">
+  <meta property="og:description" content="Analista de QA — testes funcionais, exploratórios, automação e APIs.">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/nocturne.css">
+  <link rel="stylesheet" href="./css/portfolio.css">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 </head>
 
-<body>
-  <div id="home" class="bg-svg-detail">
-    <header class="header">
-      <a href="#home"><img src="./img/logo.svg" alt="chris" width="127" height="34"></a>
-      <nav>
-        <ul class="header-menu">
-          <li><a href="#experiencia">Experiência</a></li>
-          <li><a href="#formacao">Formação</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main class="introducao">
-      <img id="img-intro" src="./img/perfil.png" alt="foto perfil" width="360" height="520">
+<body data-theme="dark">
+  <script>
+    /* Aplica tema/idioma salvos antes da primeira pintura para evitar flash. */
+    (function () {
+      try {
+        var th = localStorage.getItem('cq-theme');
+        if (th === 'light' || th === 'dark') document.body.dataset.theme = th;
+        var lg = localStorage.getItem('cq-lang');
+        if (lg === 'en') document.documentElement.lang = 'en';
+      } catch (e) {}
+    })();
+  </script>
+
+  <div class="progress-bar" aria-hidden="true"></div>
+
+  <!-- ══ Nav ══ -->
+  <div class="nav-wrap">
+    <nav class="nav site-nav">
+      <a class="nav-brand brand" href="#home" aria-label="chris. — início">
+        <svg width="86" height="23" viewBox="0 0 127 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M11.4799 34H8.59992C5.91192 34 3.95992 33.376 2.74392 32.128C1.52792 30.848 0.919922 29.232 0.919922 27.28C0.919922 24.432 1.84792 21.968 3.70392 19.888C5.55992 17.776 7.67192 16.72 10.0399 16.72C11.3839 16.72 12.5999 16.992 13.6879 17.536C14.7759 18.08 15.3199 18.608 15.3199 19.12C15.3199 20.08 14.8399 20.56 13.8799 20.56C13.4639 20.56 12.9359 20.4 12.2959 20.08C11.6559 19.76 10.9039 19.6 10.0399 19.6C8.31192 19.6 6.83992 20.416 5.62392 22.048C4.40792 23.648 3.79992 25.248 3.79992 26.848C3.79992 28.448 4.16792 29.568 4.90392 30.208C5.67192 30.816 6.90392 31.12 8.59992 31.12H11.4799C13.6879 31.12 15.8959 30.752 18.1039 30.016C18.7759 29.792 19.1599 29.68 19.2559 29.68C20.2159 29.68 20.6959 30.16 20.6959 31.12C20.6959 31.824 20.2159 32.336 19.2559 32.656C16.5679 33.552 13.9759 34 11.4799 34Z" fill="currentColor"></path>
+          <path d="M46.6122 31.12C46.6122 32.4 45.1402 33.04 42.1962 33.04C40.8202 33.04 39.7482 32.736 38.9802 32.128C38.2442 31.52 37.8762 30.464 37.8762 28.96C37.8762 27.456 37.7482 26.16 37.4922 25.072C37.2362 23.984 36.8842 23.44 36.4362 23.44C35.0922 23.44 33.8122 24.688 32.5962 27.184C32.0842 28.208 31.5402 29.248 30.9642 30.304C30.3882 31.328 29.6202 32.208 28.6602 32.944C27.7322 33.648 26.6442 34 25.3962 34C22.5162 34 21.0762 31.216 21.0762 25.648C21.0762 21.648 21.5082 17.76 22.3722 13.984C23.2682 10.208 24.5002 7.10401 26.0682 4.67201C27.6682 2.20801 29.3482 0.976013 31.1082 0.976013C32.8682 0.976013 34.1962 1.61601 35.0922 2.89601C35.9882 4.17601 36.4362 5.84001 36.4362 7.88801C36.4362 9.90401 35.8602 11.904 34.7082 13.888C33.5882 15.84 32.2122 17.424 30.5802 18.64C29.7802 19.28 29.1722 19.6 28.7562 19.6C27.7962 19.6 27.3162 19.12 27.3162 18.16C27.3162 17.776 27.8602 17.168 28.9482 16.336C30.0362 15.504 31.0762 14.32 32.0682 12.784C33.0602 11.216 33.5562 9.39201 33.5562 7.31201C33.5562 6.44801 33.3642 5.66401 32.9802 4.96001C32.5962 4.22401 31.9882 3.85601 31.1562 3.85601C30.1962 3.85601 29.1562 4.86401 28.0362 6.88001C26.9482 8.86401 25.9882 11.584 25.1562 15.04C24.3562 18.496 23.9562 22.048 23.9562 25.696C23.9562 29.312 24.4362 31.12 25.3962 31.12C26.7402 31.12 28.0202 29.872 29.2362 27.376C29.7482 26.352 30.2922 25.328 30.8682 24.304C31.4442 23.248 32.1962 22.368 33.1242 21.664C34.0842 20.928 35.1882 20.56 36.4362 20.56C39.3162 20.56 40.7562 23.28 40.7562 28.72C40.7562 29.68 41.2202 30.16 42.1482 30.16C43.1082 30.16 43.8282 30.08 44.3082 29.92C44.7882 29.76 45.0762 29.68 45.1722 29.68C46.1322 29.68 46.6122 30.16 46.6122 31.12Z" fill="currentColor"></path>
+          <path d="M53.718 21.04L54.198 22.96C54.198 23.92 53.718 24.4 52.758 24.4C52.342 24.4 51.91 24.064 51.462 23.392C51.046 22.72 50.838 21.936 50.838 21.04C50.838 19.472 51.798 18.304 53.718 17.536C55.062 16.992 56.438 16.72 57.846 16.72C59.286 16.72 60.39 17.12 61.158 17.92C61.958 18.688 62.358 19.856 62.358 21.424C62.358 22.96 62.502 24.544 62.79 26.176C63.078 27.776 63.414 29.008 63.798 29.872C64.182 30.704 64.534 31.12 64.854 31.12C65.622 31.12 66.63 30.896 67.878 30.448C69.158 29.968 70.326 29.2 71.382 28.144C71.542 27.984 72.054 27.456 72.918 26.56C73.782 25.664 74.4541 24.992 74.9341 24.544C75.3821 24.096 75.99 23.552 76.758 22.912C78.23 21.664 79.478 21.04 80.502 21.04C81.558 21.04 82.422 21.376 83.094 22.048C83.766 22.688 84.262 23.472 84.582 24.4C84.87 25.36 85.142 26.32 85.398 27.28C85.974 29.552 86.614 30.672 87.318 30.64C87.926 30.64 88.71 30.48 89.67 30.16C90.63 29.84 91.1581 29.68 91.2541 29.68C92.2141 29.68 92.694 30.16 92.694 31.12C92.694 31.824 92.2141 32.336 91.2541 32.656C89.5261 33.232 88.182 33.52 87.222 33.52C86.294 33.52 85.4941 33.2 84.8221 32.56C84.1501 31.888 83.654 31.088 83.334 30.16C83.046 29.2 82.7741 28.24 82.5181 27.28C81.9421 25.04 81.318 23.92 80.646 23.92C79.974 23.92 77.558 26 73.398 30.16C72.246 31.312 70.8701 32.24 69.2701 32.944C67.6701 33.648 66.198 34 64.854 34C63.19 34 61.878 32.784 60.918 30.352C59.958 27.888 59.478 24.784 59.478 21.04C59.478 20.08 59.014 19.6 58.086 19.6C57.35 19.6 56.438 19.744 55.35 20.032C54.262 20.288 53.718 20.624 53.718 21.04ZM82.038 10.192C82.55 10.192 83.078 10.432 83.622 10.912C84.166 11.36 84.438 11.84 84.438 12.352C84.438 12.832 84.23 13.2 83.814 13.456C83.43 13.712 82.982 13.84 82.47 13.84C81.958 13.84 81.51 13.616 81.126 13.168C80.774 12.688 80.598 12.176 80.598 11.632C80.598 10.672 81.078 10.192 82.038 10.192Z" fill="currentColor"></path>
+          <path d="M91.0602 29.632C92.7882 28.928 94.1482 28.192 95.1402 27.424C96.1322 26.624 97.3482 25.472 98.7882 23.968C100.228 22.464 101.172 21.52 101.62 21.136C103.156 19.792 104.788 19.12 106.516 19.12C107.572 19.12 108.724 19.376 109.972 19.888C111.252 20.4 112.436 21.312 113.524 22.624C114.612 23.936 115.156 25.504 115.156 27.328C115.156 29.12 114.1 30.688 111.988 32.032C109.876 33.344 107.092 34 103.636 34C102.676 34 102.196 33.52 102.196 32.56C102.196 31.6 102.676 31.12 103.636 31.12C106.26 31.12 108.356 30.704 109.924 29.872C111.492 29.008 112.276 28.144 112.276 27.28C112.276 26.096 111.892 25.072 111.124 24.208C109.78 22.736 108.244 22 106.516 22C105.524 22 104.548 22.416 103.588 23.248C103.3 23.504 102.372 24.432 100.804 26.032C99.2682 27.632 97.9882 28.832 96.9642 29.632C95.9722 30.432 94.8202 31.12 93.5082 31.696C92.2282 32.272 91.4122 32.56 91.0602 32.56C90.1002 32.56 89.6202 32.08 89.6202 31.12C89.6202 30.512 90.1002 30.016 91.0602 29.632Z" fill="currentColor"></path>
+          <path d="M124.278 30.352C124.79 30.352 125.318 30.576 125.862 31.024C126.406 31.472 126.678 31.952 126.678 32.464C126.678 32.976 126.454 33.36 126.006 33.616C125.59 33.872 125.126 34 124.614 34C124.102 34 123.67 33.776 123.318 33.328C122.998 32.848 122.838 32.336 122.838 31.792C122.838 30.832 123.318 30.352 124.278 30.352Z" fill="var(--color-accent)"></path>
+        </svg>
+      </a>
+      <div class="nav-links">
+        <a href="#stack" data-i18n="navSkills">Stack</a>
+        <a href="#experiencia" data-i18n="navExp">Experiência</a>
+        <a href="#projetos" data-i18n="navProj">Projetos</a>
+        <a href="#formacao" data-i18n="navForm">Formação</a>
+        <a href="#contato" data-i18n="navContact">Contato</a>
+      </div>
+      <div class="nav-controls">
+        <div class="lang-switch" role="group" aria-label="Idioma / Language">
+          <button type="button" class="lang-btn active" data-lang="pt" aria-pressed="true">PT</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button type="button" class="btn btn-icon btn-secondary theme-toggle" aria-label="Alternar tema">
+          <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"></circle><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"></path></svg>
+          <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"></path></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ══ Hero ══ -->
+  <header id="home" class="hero">
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="hero-particles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="hero-spotlight" aria-hidden="true"></div>
+    <div class="hero-inner">
       <div>
-        <h1>QA <br> Analyst</h1>
-        <a href="https://www.linkedin.com/in/chriscsantosqa/" target="_blank"><img class="linkedin" src="./img/linkedin.png" width="30" height="30""></a>
-        <h2>Christopher C. Santos</h2>
-        <p>Araçatuba-SP 🌄</p>
+        <p class="hero-kicker mono" data-stagger="1" data-i18n="heroHello">$ olá, eu sou</p>
+        <h1 class="hero-title" data-stagger="2">Christopher C. Santos</h1>
+        <div class="hero-typed mono" data-stagger="3">
+          <span class="sr-only">QA Analyst · Automação de Testes · Testes de API · Testes Exploratórios</span>
+          <span aria-hidden="true"><span id="typed">QA Analyst</span><span class="typed-cursor">&nbsp;</span></span>
+        </div>
+        <p class="hero-lead" data-stagger="4" data-i18n="heroLead">Analista de QA com atuação em testes funcionais, exploratórios, automação, APIs e IA aplicada à qualidade. Transformo requisitos em confiança de entrega — da condição de teste ao report do incidente.</p>
+        <p class="hero-loc text-muted" data-stagger="5">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z"></path><circle cx="12" cy="10" r="2.6"></circle></svg>
+          <span data-i18n="heroLoc">Araçatuba — SP, Brasil</span>
+        </p>
+        <div class="hero-ctas" data-stagger="6">
+          <a class="btn btn-primary" href="#contato" data-i18n="ctaContact">Entrar em contato</a>
+          <a class="btn btn-secondary" href="https://www.linkedin.com/in/chriscsantosqa/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-secondary" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">GitHub</a>
+        </div>
       </div>
-    </main>
-    <section class=" experiencia" id="experiencia" aria-label="Experiência">
-          <h2 class="subtitulo">Experiência</h2>
-          <div>
-            <p class="experiencia-texto">Estudando afinco sobre <strong>Qualidade e Testes de Software</strong>, <strong>Automação</strong> e <strong>Ferramentas</strong> que auxiliam todo o processo de <strong>Report/Tracking</strong>. Buscando me <strong>APERFEIÇOAR</strong> na área, pra que assim eu possa me tornar o <strong>QA <u>Imprescindível</u></strong> que eu sonho em ser.</p>
-            <div class="empresa">
-              <span class="empresa-ano">2023</span>
-              <h3 class="empresa-titulo"><a href="https://www.linkedin.com/company/lacrei/">4BIO Medicamentos Especiais</a></h3>
-              <span class="empresa-titulo">QA Analyst</span>
-              <p class="empresa-texto">Responsável pela construção/execução de Casos de Teste, Report de incidentes, Testes Exploratórios e toda documentação dos artefatos, visando entregar um produto de qualidade junto a equipe.</p>
-              <ul class="empresa-habilidades">
-                <li>Testes Exploratórios</li>
-                <li>Testes Funcionais</li>
-                <li>Testes Web</li>
-                <li>Testes API</li>
-                <li>Azure DevOps</li>
-                <li>Postman</li>
-                <li>REST</li>
-                <li>GraphQL</li>
-                <li>Scrum</li>
-                <li>Swagger</li>
-                <li>SQL Server</li>
-              </ul>
-            </div>
-            <div class="empresa">
-              <span class="empresa-ano">2023</span>
-              <h3 class="empresa-titulo"><a href="https://www.linkedin.com/company/lacrei/">Lacrei Saúde</a></h3>
-              <span class="empresa-titulo">QA Analyst / Voluntário</span>
-              <p class="empresa-texto">Responsável pela construção/execução de Casos de Teste, Report de incidentes, Testes Exploratórios e toda documentação dos artefatos, visando entregar um produto de qualidade para o atendimento clínico da comunidade LGBTQIAPN+.</p>
-              <ul class="empresa-habilidades">
-                <li>Testes Exploratórios</li>
-                <li>Testes Funcionais</li>
-                <li>Cypress</li>
-                <li>Kanban</li>
-                <li>Scrum</li>
-                <li>Gherkin</li>
-                <li>Postman</li>
-                <li>Swagger</li>
-                <li>Figma</li>
-                <li>Notion</li>
-              </ul>
-            </div>
-            <div class="empresa">
-              <span class="empresa-ano">2023</span>
-              <h3 class="empresa-titulo"><a href="https://www.utest.com/profile/Closedman/about">Crowdtest</a></h3>
-              <span class="empresa-titulo">Tester / Freelance</span>
-              <p class="empresa-texto">Responsável por realizar Testes Exploratórios e Funcionais em diversos tipos de projetos.</p>
-              <ul class="empresa-habilidades">
-                <li>Testes Exploratórios</li>
-                <li>Testes Funcionais</li>
-                <li>Testes Web</li>
-              </ul>
-            </div>
-            <div class="empresa">
-              <span class="empresa-ano">2023</span>
-              <h3 class="empresa-titulo"><a href="https://www.utest.com/profile/Closedman/about">uTest</a></h3>
-              <span class="empresa-titulo">Tester / Freelance</span>
-              <p class="empresa-texto">Responsável por realizar Testes Exploratórios e Funcionais em diversos tipos de projetos.</p>
-              <ul class="empresa-habilidades">
-                <li>A.I</li>
-                <li>Testes Exploratórios</li>
-                <li>Testes Funcionais</li>
-                <li>Testes Mobile</li>
-                <li>Testes Web</li>
-              </ul>
-            </div>
-            <div class="empresa">
-              <span class="empresa-ano">2014-2021</span>
-              <h3 class="empresa-titulo">Designer Gráfico</h3>
-              <span class="empresa-titulo">Freelance</span>
-              <p class="empresa-texto">Elaborava Logotipos, Banners, Landing Pages, Artes Promocionais, Social Media.</p>
-              <ul class="empresa-habilidades">
-                <li>Illustrator</li>
-                <li>Photoshop</li>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>UX/UI Design</li>
-                <li>Figma</li>
-              </ul>
-            </div>
+      <div class="hero-side">
+        <div class="hero-photo-wrap" data-stagger="7">
+          <div class="photo-glow" aria-hidden="true"></div>
+          <img class="hero-photo" src="./img/avatar.jpg" alt="Avatar 3D de Christopher C. Santos" width="296" height="394">
+          <span class="corner corner-tl" aria-hidden="true"></span>
+          <span class="corner corner-tr" aria-hidden="true"></span>
+          <span class="corner corner-bl" aria-hidden="true"></span>
+          <span class="corner corner-br" aria-hidden="true"></span>
+          <span class="float-badge fb-1" aria-hidden="true">&#10003; Playwright</span>
+          <span class="float-badge fb-2" aria-hidden="true">&#10003; LLM</span>
+          <span class="float-badge fb-3" aria-hidden="true">&#10003; GraphQL</span>
+          <span class="float-badge fb-4" aria-hidden="true">&#10003; Azure DevOps</span>
+          <span class="float-badge fb-5" aria-hidden="true">&#10003; JMeter</span>
+          <span class="float-badge fb-6" aria-hidden="true">&#10003; K6</span>
+          <span class="float-badge fb-7" aria-hidden="true">&#10003; C#</span>
+          <span class="float-badge fb-8" aria-hidden="true">&#10003; .NET Stack</span>
+        </div>
+        <div class="badge-row" aria-hidden="true">
+          <span class="float-badge">&#10003; Playwright</span>
+          <span class="float-badge">&#10003; LLM</span>
+          <span class="float-badge">&#10003; GraphQL</span>
+          <span class="float-badge">&#10003; Azure DevOps</span>
+          <span class="float-badge">&#10003; JMeter</span>
+          <span class="float-badge">&#10003; K6</span>
+          <span class="float-badge">&#10003; C#</span>
+          <span class="float-badge">&#10003; .NET Stack</span>
+        </div>
+        <div class="terminal" aria-hidden="true">
+          <div class="terminal-bar">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot accent"></span>
+            <span class="terminal-title">qa@chris:~</span>
           </div>
-          </section>
-      </div>
-      <section class="formacao" id="formacao" aria-label="Formação">
-        <div class="formacao-container">
-          <h2 class="subtitulo">Formação</h2>
-          <div>
-            <p class="formacao-texto">Minha mais recente experiência acadêmica foi a <strong> graduação</strong> 🎓 que fiz no Brasil em <strong>Analíse e Desenvolvimento de Sistemas</strong> e meu inicio na <strong>Pós-Graduação</strong>🎓 de <strong> MBA, Gestão Estratégica de Projetos e Metodologias Ágeis</strong>. Além disso estou sempre me mantendo atualizado com cursos intensivos online, principalmente na área de <strong>Qualidade/Testes de Software</strong>.</p>
-            <ul class="faculdade-lista">
-              <li class="faculdade">
-                <span class="faculdade-tipo">Tecnólogo</span>
-                <h3 class="faculdade-curso">Análise e Desenvolvimento de Sistemas</h3>
-                <span class="faculdade-instituicao">Uninter</span>
-              </li>
-              <li class="faculdade">
-                <span class="faculdade-tipo">Pós-Graduação - Cursando</span>
-                <h3 class="faculdade-curso">PGATS | Automação De Testes De Software</h3>
-                <span class="faculdade-instituicao">Faculdade VINCIT</span>
-              </li>
-            </ul>
-            <div class="formacao-extra">
-              <div class="cursos">
-                <h3>Cursos Intensivos</h3>
-                <ul>
-                  <li>DTAR - Descomplicando Testes de API Rest<span>24h+</span> </li>
-                  <li>test.class | Escola de Testes de Software<span>30h+</span> </li>
-                  <li>Mentoria em Testes de Software <span>90h+</span> </li>
-                  <li>Programa de Testes e Qualidade de Software <span>85h+</span> </li>
-                  <li>Descomplicando Testes de API Rest (DTAR) <span>24h</span> </li>
-                  <li>Testes automatizados com Cypress - Básico<span>4,5h</span></li>
-                  <li>Testes automatizados com Cypress (intermediário)<span>3,5h</span></li>
-                  <li>Testes automatizados com Cypress - Avançado<span>2,5h</span></li>
-                  <li>Automação de Testes com Robot Framework - Básico<span>7h</span></li>
-                  <li>UX Design & UI Design <span>17h</span> </li>
-                  <li>HTML e CSS para Iniciantes <span>23h</span> </li>
-                </ul>
-              </div>
-              <div class="idiomas">
-                <h3>Idiomas</h3>
-                <ul>
-                  <li>Português <span>/ Nativo</span> </li>
-                  <li>Inglês <span>/ Intermediário</span> </li>
-                </ul>
-              </div>
-            </div>
+          <div class="terminal-body">
+            <span class="t-line-1">$ npx cypress run</span>
+            <span class="t-line-2">&#10003; login.cy.js &nbsp;(12 passing)</span>
+            <span class="t-line-3">&#10003; checkout.cy.js (8 passing)</span>
+            <span class="t-line-4"><span data-i18n="termStatus">status: qualidade em dia</span> <span class="term-dot">&#9679;</span></span>
           </div>
         </div>
-      </section>
-      <footer class="footer" id="contato">
-        <div class="footer-container">
-          <p class="footer-texto">Mais informações ?<br>Entre em contato comigo e marcamos uma conversa 👋</p>
-          <ul class="footer-contato">
-            <li><a href="https://www.linkedin.com/in/chriscsantosqa/" target="_blank"><img class="linkedin" src="./img/linkedin.png" width="30" height="30""></a></li>
-        <li><a href=" https://github.com/chriscsantosqa" target="_blank"><img src="./img/github.png" width="30" height="30"></a></li>
-            <li><a href="tel:+5518998257902"><img src="./img/whatsapp.png" width="30" height="30"></a></li>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ Stack ══ -->
+  <section id="stack" class="section" data-reveal aria-label="Stack técnica">
+    <p class="kicker">// <span data-i18n="skillsKicker">stack técnica</span></p>
+    <h2 data-i18n="skillsTitle">Ferramentas &amp; competências</h2>
+    <div class="skills-grid" id="skills-grid">
+      <div class="card elev-sm skill-card">
+        <span class="card-kicker">Testes</span>
+        <div class="tags-row"><span class="tag tag-neutral">Exploratórios</span><span class="tag tag-neutral">Funcionais</span><span class="tag tag-neutral">Web</span><span class="tag tag-neutral">Mobile</span><span class="tag tag-neutral">API</span></div>
+      </div>
+      <div class="card elev-sm skill-card">
+        <span class="card-kicker">Automação</span>
+        <div class="tags-row"><span class="tag tag-neutral">Playwright</span><span class="tag tag-neutral">Cypress</span><span class="tag tag-neutral">C#</span><span class="tag tag-neutral">JavaScript</span><span class="tag tag-neutral">Allure</span><span class="tag tag-neutral">Robot Framework</span><span class="tag tag-neutral">Gherkin / BDD</span></div>
+      </div>
+      <div class="card elev-sm skill-card">
+        <span class="card-kicker">API &amp; Dados</span>
+        <div class="tags-row"><span class="tag tag-neutral">Postman</span><span class="tag tag-neutral">REST</span><span class="tag tag-neutral">GraphQL</span><span class="tag tag-neutral">HotChocolate</span><span class="tag tag-neutral">Swagger</span><span class="tag tag-neutral">SQL Server</span></div>
+      </div>
+      <div class="card elev-sm skill-card">
+        <span class="card-kicker">IA aplicada à QA</span>
+        <div class="tags-row"><span class="tag tag-neutral">LLMs / RAG</span><span class="tag tag-neutral">Ollama</span><span class="tag tag-neutral">Agentes de IA</span><span class="tag tag-neutral">MCP</span><span class="tag tag-neutral">FastAPI</span><span class="tag tag-neutral">OpenWebUI</span></div>
+      </div>
+      <div class="card elev-sm skill-card">
+        <span class="card-kicker">Processo &amp; Ferramentas</span>
+        <div class="tags-row"><span class="tag tag-neutral">Azure DevOps</span><span class="tag tag-neutral">WIQL</span><span class="tag tag-neutral">TMMi</span><span class="tag tag-neutral">Scrum</span><span class="tag tag-neutral">Kanban</span><span class="tag tag-neutral">Notion</span><span class="tag tag-neutral">Figma</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Experiência ══ -->
+  <section id="experiencia" class="section" data-reveal aria-label="Experiência">
+    <p class="kicker">// <span data-i18n="expKicker">trajetória</span></p>
+    <h2 data-i18n="expTitle">Experiência</h2>
+    <p class="section-lead" data-i18n="expLead">Da construção de condições de teste à automação, com foco em entregar produtos de qualidade junto ao time.</p>
+    <div id="exp-list">
+      <div class="exp-item">
+        <div class="exp-year">2023 —</div>
+        <div>
+          <div class="exp-head"><h3>4BIO Medicamentos Especiais</h3><span class="exp-role text-muted">QA Analyst</span></div>
+          <p class="exp-text">À frente da implantação do processo de QA da empresa, estruturando a qualidade em todo o ciclo de vida do desenvolvimento — do refinamento à entrega — com automação, métricas e IA aplicadas ao dia a dia do time.</p>
+          <ul class="exp-highlights">
+            <li>Implantação da estrutura de automação de checagens de API com Playwright e C#, com monitoramento e visibilidade dos resultados via relatórios Allure.</li>
+            <li>Implantação do framework TMMi junto ao time, estruturando o processo de qualidade em aderência a referências internacionais.</li>
+            <li>Planejamento e execução de condições de teste no Azure DevOps, com conhecimento avançado da plataforma e de suas integrações.</li>
+            <li>Criação de dashboard desktop (Electron, React, JavaScript e Tailwind) integrado ao Azure DevOps via WIQL: métricas de qualidade, ciclo de vida do desenvolvimento, acompanhamento de artefatos, estimativas de sprint e extração de resultados com análise por IA integrada via MCP.</li>
+            <li>Desenvolvimento de LLM corporativa com Ollama, OpenWebUI, OpenClaw, FastAPI e vault do Obsidian, estruturando base de conhecimento RAG (endpoints e documentos locais) para uso empresarial e de negócios.</li>
+            <li>Criação de agentes de IA com ferramentas personalizadas para comunicação com o Azure DevOps (análise de artefatos) e com endpoints de negócio (produtos, valores, estoques), elevando a eficiência do time de negócios.</li>
+            <li>Apoio à gestão no acompanhamento e desenvolvimento de novos colaboradores do time.</li>
           </ul>
-          <div class=" footer-grid">
-            <a href="#home"><img class="footer-logo" src="./img/logo-footer.svg" alt="chris" width="80" height="20"></a>
-            <p class="footer-copy">Alguns direitos reservados.</p>
+          <div class="exp-tags"><span class="tag tag-accent">Playwright</span><span class="tag tag-accent">C#</span><span class="tag tag-accent">Allure</span><span class="tag tag-accent">Azure DevOps</span><span class="tag tag-accent">TMMi</span><span class="tag tag-accent">Postman</span><span class="tag tag-accent">REST</span><span class="tag tag-accent">GraphQL</span><span class="tag tag-accent">HotChocolate</span><span class="tag tag-accent">LLMs / RAG</span><span class="tag tag-accent">MCP</span><span class="tag tag-accent">Scrum</span><span class="tag tag-accent">Kanban</span></div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-year">2023</div>
+        <div>
+          <div class="exp-head"><h3>Lacrei Saúde</h3><span class="exp-role text-muted">QA Analyst · Voluntário</span></div>
+          <p class="exp-text">Qualidade da plataforma de atendimento clínico para a comunidade LGBTQIAPN+ — condições de teste, cenários em Gherkin, automação com Cypress e report de incidentes.</p>
+          <div class="exp-tags"><span class="tag tag-accent">Cypress</span><span class="tag tag-accent">Gherkin</span><span class="tag tag-accent">Postman</span><span class="tag tag-accent">Swagger</span><span class="tag tag-accent">Kanban</span><span class="tag tag-accent">Figma</span><span class="tag tag-accent">Notion</span></div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-year">2023</div>
+        <div>
+          <div class="exp-head"><h3>Crowdtest</h3><span class="exp-role text-muted">Tester · Freelance</span></div>
+          <p class="exp-text">Testes exploratórios e funcionais em projetos de diversos segmentos, em plataforma de crowdtesting.</p>
+          <div class="exp-tags"><span class="tag tag-accent">Testes Exploratórios</span><span class="tag tag-accent">Testes Funcionais</span><span class="tag tag-accent">Web</span></div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-year">2023</div>
+        <div>
+          <div class="exp-head"><h3>uTest</h3><span class="exp-role text-muted">Tester · Freelance</span></div>
+          <p class="exp-text">Testes exploratórios, funcionais, web e mobile em projetos internacionais, incluindo produtos com I.A.</p>
+          <div class="exp-tags"><span class="tag tag-accent">A.I</span><span class="tag tag-accent">Mobile</span><span class="tag tag-accent">Web</span><span class="tag tag-accent">Testes Exploratórios</span></div>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-year">2014 – 21</div>
+        <div>
+          <div class="exp-head"><h3>Designer Gráfico</h3><span class="exp-role text-muted">Freelance</span></div>
+          <p class="exp-text">Logotipos, banners, landing pages e social media — base sólida de UX/UI que hoje apoia o olhar crítico de QA sobre interfaces.</p>
+          <div class="exp-tags"><span class="tag tag-accent">Illustrator</span><span class="tag tag-accent">Photoshop</span><span class="tag tag-accent">HTML</span><span class="tag tag-accent">CSS</span><span class="tag tag-accent">UX/UI</span><span class="tag tag-accent">Figma</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Faixa de diferenciais ══ -->
+  <section class="value-band" data-reveal aria-label="Diferenciais">
+    <div class="value-grid">
+      <div class="value-cell">
+        <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"></path></svg>
+        <div class="value-title" data-i18n="valAutoT">Automação de ponta a ponta</div>
+        <p class="value-desc" data-i18n="valAutoD">Playwright, Cypress e C# cobrindo UI e APIs, com resultados visíveis em relatórios Allure.</p>
+      </div>
+      <div class="value-cell">
+        <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.9 5.6L19.5 10.5l-5.6 1.9L12 18l-1.9-5.6L4.5 10.5l5.6-1.9L12 3Z"></path><path d="M19 16.5v4M17 18.5h4"></path></svg>
+        <div class="value-title" data-i18n="valAiT">IA aplicada à qualidade</div>
+        <p class="value-desc" data-i18n="valAiD">LLMs com RAG, agentes e MCP integrados ao ciclo de QA e aos processos do negócio.</p>
+      </div>
+      <div class="value-cell">
+        <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"></path><path d="M7 16v-5M12 16V7M17 16v-3"></path></svg>
+        <div class="value-title" data-i18n="valMetT">Qualidade guiada por métricas</div>
+        <p class="value-desc" data-i18n="valMetD">Dashboards de métricas e ciclo de vida extraídos do Azure DevOps via WIQL, com análise por IA.</p>
+      </div>
+      <div class="value-cell">
+        <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 9.5-4-1.3-7-5-7-9.5V6l7-3Z"></path><path d="m9 11.5 2 2 4-4"></path></svg>
+        <div class="value-title" data-i18n="valProcT">Processo com maturidade</div>
+        <p class="value-desc" data-i18n="valProcD">TMMi como referência internacional de qualidade, com Scrum e Kanban no dia a dia do time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Projetos ══ -->
+  <section id="projetos" class="section" data-reveal aria-label="Projetos">
+    <p class="kicker">// <span data-i18n="projKicker">cases</span></p>
+    <h2 data-i18n="projTitle">Projetos &amp; cases de teste</h2>
+    <p class="section-lead" data-i18n="projLead">Projetos reais construídos ao longo da trajetória — automação, dados e IA aplicados à qualidade de software.</p>
+    <div class="projects-grid" id="projects-grid">
+      <div class="card elev-sm project-card" data-tilt>
+        <span class="card-kicker">Automação de API</span>
+        <span class="card-title">Framework Playwright + C#</span>
+        <p class="card-body">Estrutura de automação de checagens de API construída do zero com Playwright e C#, com monitoramento e visão dos resultados via relatórios Allure.</p>
+        <div class="exp-tags"><span class="tag tag-outline">Playwright</span><span class="tag tag-outline">C#</span><span class="tag tag-outline">Allure</span></div>
+        <a class="btn btn-ghost proj-cta" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">Ver no GitHub
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        </a>
+      </div>
+      <div class="card elev-sm project-card" data-tilt>
+        <span class="card-kicker">Qualidade &amp; Dados</span>
+        <span class="card-title">Dashboard de métricas de QA</span>
+        <p class="card-body">App desktop em Electron + React + Tailwind integrado ao Azure DevOps via WIQL: métricas de qualidade, artefatos, estimativas de sprint e análise por IA integrada via MCP.</p>
+        <div class="exp-tags"><span class="tag tag-outline">Electron</span><span class="tag tag-outline">React</span><span class="tag tag-outline">WIQL</span><span class="tag tag-outline">MCP</span></div>
+        <a class="btn btn-ghost proj-cta" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">Ver no GitHub
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        </a>
+      </div>
+      <div class="card elev-sm project-card" data-tilt>
+        <span class="card-kicker">IA aplicada</span>
+        <span class="card-title">LLM corporativa com RAG</span>
+        <p class="card-body">LLM empresarial com Ollama, OpenWebUI e FastAPI sobre base de conhecimento RAG, com agentes e ferramentas personalizadas conectados ao Azure DevOps e endpoints de negócio.</p>
+        <div class="exp-tags"><span class="tag tag-outline">Ollama</span><span class="tag tag-outline">RAG</span><span class="tag tag-outline">FastAPI</span><span class="tag tag-outline">Agentes</span></div>
+        <a class="btn btn-ghost proj-cta" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">Ver no GitHub
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        </a>
+      </div>
+      <div class="card elev-sm project-card" data-tilt>
+        <span class="card-kicker">Automação E2E</span>
+        <span class="card-title">Suíte Cypress — fluxos críticos</span>
+        <p class="card-body">Cenários end-to-end escritos em Gherkin e automatizados com Cypress, cobrindo os fluxos críticos da plataforma de atendimento.</p>
+        <div class="exp-tags"><span class="tag tag-outline">Cypress</span><span class="tag tag-outline">Gherkin</span><span class="tag tag-outline">BDD</span></div>
+        <a class="btn btn-ghost proj-cta" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">Ver no GitHub
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        </a>
+      </div>
+      <div class="card elev-sm project-card" data-tilt>
+        <span class="card-kicker">Testes de API</span>
+        <span class="card-title">Coleções REST &amp; GraphQL</span>
+        <p class="card-body">Coleções Postman para validação de contratos, status e payloads em serviços REST e GraphQL, documentados via Swagger.</p>
+        <div class="exp-tags"><span class="tag tag-outline">Postman</span><span class="tag tag-outline">GraphQL</span><span class="tag tag-outline">Swagger</span></div>
+        <a class="btn btn-ghost proj-cta" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">Ver no GitHub
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        </a>
+      </div>
+      <div class="card elev-sm project-card" data-tilt>
+        <span class="card-kicker">Documentação de QA</span>
+        <span class="card-title">Artefatos &amp; rastreabilidade</span>
+        <p class="card-body">Planos e condições de teste, report e tracking de incidentes no Azure DevOps — rastreabilidade do requisito ao defeito.</p>
+        <div class="exp-tags"><span class="tag tag-outline">Azure DevOps</span><span class="tag tag-outline">SQL Server</span></div>
+        <a class="btn btn-ghost proj-cta" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">Ver no GitHub
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Formação ══ -->
+  <section id="formacao" class="section" data-reveal aria-label="Formação">
+    <p class="kicker">// <span data-i18n="formKicker">formação</span></p>
+    <h2 data-i18n="formTitle">Formação acadêmica</h2>
+    <p class="section-lead" data-i18n="formLead">Graduação em tecnologia, pós em automação de testes e formação contínua na área de qualidade de software.</p>
+    <div class="form-grid">
+      <div class="form-left">
+        <div id="degrees-list" class="form-left">
+          <div class="card elev-sm degree-card">
+            <span class="card-kicker">Tecnólogo</span>
+            <span class="card-title">Análise e Desenvolvimento de Sistemas</span>
+            <span class="card-meta">Uninter</span>
+          </div>
+          <div class="card elev-sm degree-card">
+            <span class="card-kicker">Pós-graduação · Cursando</span>
+            <span class="card-title">PGATS — Automação de Testes de Software</span>
+            <span class="card-meta">Faculdade VINCIT</span>
           </div>
         </div>
-      </footer>
+        <div class="card elev-sm langs-card">
+          <span class="card-kicker" data-i18n="langTitle">Idiomas</span>
+          <div class="langs-list" id="langs-list">
+            <div class="lang-row"><span>Português</span><span class="tag tag-accent">Nativo</span></div>
+            <div class="lang-row"><span>Inglês</span><span class="tag tag-accent">Intermediário</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-right">
+        <h4 data-i18n="certTitle">Cursos &amp; certificações</h4>
+        <div class="courses" id="courses-list">
+          <div class="course-row"><span class="course-name">Mentoria em Testes de Software</span><span class="course-hours">90h+</span></div>
+          <div class="course-row"><span class="course-name">Programa de Testes e Qualidade de Software</span><span class="course-hours">85h+</span></div>
+          <div class="course-row"><span class="course-name">test.class — Escola de Testes de Software</span><span class="course-hours">30h+</span></div>
+          <div class="course-row"><span class="course-name">DTAR — Descomplicando Testes de API Rest</span><span class="course-hours">24h+</span></div>
+          <div class="course-row"><span class="course-name">HTML e CSS para Iniciantes</span><span class="course-hours">23h</span></div>
+          <div class="course-row"><span class="course-name">UX Design &amp; UI Design</span><span class="course-hours">17h</span></div>
+          <div class="course-row"><span class="course-name">Automação de Testes com Robot Framework</span><span class="course-hours">7h</span></div>
+          <div class="course-row"><span class="course-name">Testes automatizados com Cypress — Básico</span><span class="course-hours">4,5h</span></div>
+          <div class="course-row"><span class="course-name">Testes automatizados com Cypress — Intermediário</span><span class="course-hours">3,5h</span></div>
+          <div class="course-row"><span class="course-name">Testes automatizados com Cypress — Avançado</span><span class="course-hours">2,5h</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Contato / footer ══ -->
+  <footer id="contato" class="footer" data-reveal>
+    <div class="footer-inner">
+      <p class="kicker">// <span data-i18n="navContact">Contato</span></p>
+      <h2 class="contact-title" data-i18n="contactTitle">Vamos conversar sobre qualidade?</h2>
+      <p class="contact-lead" data-i18n="contactLead">Aberto a oportunidades e boas conversas sobre testes, automação e qualidade de software. Me chame e marcamos um papo. 👋</p>
+      <div class="contact-ctas">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/chriscsantosqa/" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.5 8.8H3.6V20h2.9V8.8ZM5 7.4a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4Zm6.6 6.7c0-1.3.6-2.1 1.8-2.1 1.1 0 1.6.8 1.6 2.1V20h2.9v-6.4c0-2.9-1.6-4.3-3.8-4.3-1.8 0-2.5 1-2.5 1V8.8H8.7V20h2.9v-5.9Z"></path></svg>
+          LinkedIn
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/chriscsantosqa" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.4-1.1-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.7s.9-.3 2.8 1a9.5 9.5 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"></path></svg>
+          GitHub
+        </a>
+        <a class="btn btn-secondary" href="tel:+5518998257902">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"></path></svg>
+          WhatsApp
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <a href="#home" class="brand" aria-label="chris. — voltar ao topo">
+          <svg width="72" height="19" viewBox="0 0 127 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M11.4799 34H8.59992C5.91192 34 3.95992 33.376 2.74392 32.128C1.52792 30.848 0.919922 29.232 0.919922 27.28C0.919922 24.432 1.84792 21.968 3.70392 19.888C5.55992 17.776 7.67192 16.72 10.0399 16.72C11.3839 16.72 12.5999 16.992 13.6879 17.536C14.7759 18.08 15.3199 18.608 15.3199 19.12C15.3199 20.08 14.8399 20.56 13.8799 20.56C13.4639 20.56 12.9359 20.4 12.2959 20.08C11.6559 19.76 10.9039 19.6 10.0399 19.6C8.31192 19.6 6.83992 20.416 5.62392 22.048C4.40792 23.648 3.79992 25.248 3.79992 26.848C3.79992 28.448 4.16792 29.568 4.90392 30.208C5.67192 30.816 6.90392 31.12 8.59992 31.12H11.4799C13.6879 31.12 15.8959 30.752 18.1039 30.016C18.7759 29.792 19.1599 29.68 19.2559 29.68C20.2159 29.68 20.6959 30.16 20.6959 31.12C20.6959 31.824 20.2159 32.336 19.2559 32.656C16.5679 33.552 13.9759 34 11.4799 34Z" fill="currentColor"></path>
+            <path d="M46.6122 31.12C46.6122 32.4 45.1402 33.04 42.1962 33.04C40.8202 33.04 39.7482 32.736 38.9802 32.128C38.2442 31.52 37.8762 30.464 37.8762 28.96C37.8762 27.456 37.7482 26.16 37.4922 25.072C37.2362 23.984 36.8842 23.44 36.4362 23.44C35.0922 23.44 33.8122 24.688 32.5962 27.184C32.0842 28.208 31.5402 29.248 30.9642 30.304C30.3882 31.328 29.6202 32.208 28.6602 32.944C27.7322 33.648 26.6442 34 25.3962 34C22.5162 34 21.0762 31.216 21.0762 25.648C21.0762 21.648 21.5082 17.76 22.3722 13.984C23.2682 10.208 24.5002 7.10401 26.0682 4.67201C27.6682 2.20801 29.3482 0.976013 31.1082 0.976013C32.8682 0.976013 34.1962 1.61601 35.0922 2.89601C35.9882 4.17601 36.4362 5.84001 36.4362 7.88801C36.4362 9.90401 35.8602 11.904 34.7082 13.888C33.5882 15.84 32.2122 17.424 30.5802 18.64C29.7802 19.28 29.1722 19.6 28.7562 19.6C27.7962 19.6 27.3162 19.12 27.3162 18.16C27.3162 17.776 27.8602 17.168 28.9482 16.336C30.0362 15.504 31.0762 14.32 32.0682 12.784C33.0602 11.216 33.5562 9.39201 33.5562 7.31201C33.5562 6.44801 33.3642 5.66401 32.9802 4.96001C32.5962 4.22401 31.9882 3.85601 31.1562 3.85601C30.1962 3.85601 29.1562 4.86401 28.0362 6.88001C26.9482 8.86401 25.9882 11.584 25.1562 15.04C24.3562 18.496 23.9562 22.048 23.9562 25.696C23.9562 29.312 24.4362 31.12 25.3962 31.12C26.7402 31.12 28.0202 29.872 29.2362 27.376C29.7482 26.352 30.2922 25.328 30.8682 24.304C31.4442 23.248 32.1962 22.368 33.1242 21.664C34.0842 20.928 35.1882 20.56 36.4362 20.56C39.3162 20.56 40.7562 23.28 40.7562 28.72C40.7562 29.68 41.2202 30.16 42.1482 30.16C43.1082 30.16 43.8282 30.08 44.3082 29.92C44.7882 29.76 45.0762 29.68 45.1722 29.68C46.1322 29.68 46.6122 30.16 46.6122 31.12Z" fill="currentColor"></path>
+            <path d="M53.718 21.04L54.198 22.96C54.198 23.92 53.718 24.4 52.758 24.4C52.342 24.4 51.91 24.064 51.462 23.392C51.046 22.72 50.838 21.936 50.838 21.04C50.838 19.472 51.798 18.304 53.718 17.536C55.062 16.992 56.438 16.72 57.846 16.72C59.286 16.72 60.39 17.12 61.158 17.92C61.958 18.688 62.358 19.856 62.358 21.424C62.358 22.96 62.502 24.544 62.79 26.176C63.078 27.776 63.414 29.008 63.798 29.872C64.182 30.704 64.534 31.12 64.854 31.12C65.622 31.12 66.63 30.896 67.878 30.448C69.158 29.968 70.326 29.2 71.382 28.144C71.542 27.984 72.054 27.456 72.918 26.56C73.782 25.664 74.4541 24.992 74.9341 24.544C75.3821 24.096 75.99 23.552 76.758 22.912C78.23 21.664 79.478 21.04 80.502 21.04C81.558 21.04 82.422 21.376 83.094 22.048C83.766 22.688 84.262 23.472 84.582 24.4C84.87 25.36 85.142 26.32 85.398 27.28C85.974 29.552 86.614 30.672 87.318 30.64C87.926 30.64 88.71 30.48 89.67 30.16C90.63 29.84 91.1581 29.68 91.2541 29.68C92.2141 29.68 92.694 30.16 92.694 31.12C92.694 31.824 92.2141 32.336 91.2541 32.656C89.5261 33.232 88.182 33.52 87.222 33.52C86.294 33.52 85.4941 33.2 84.8221 32.56C84.1501 31.888 83.654 31.088 83.334 30.16C83.046 29.2 82.7741 28.24 82.5181 27.28C81.9421 25.04 81.318 23.92 80.646 23.92C79.974 23.92 77.558 26 73.398 30.16C72.246 31.312 70.8701 32.24 69.2701 32.944C67.6701 33.648 66.198 34 64.854 34C63.19 34 61.878 32.784 60.918 30.352C59.958 27.888 59.478 24.784 59.478 21.04C59.478 20.08 59.014 19.6 58.086 19.6C57.35 19.6 56.438 19.744 55.35 20.032C54.262 20.288 53.718 20.624 53.718 21.04ZM82.038 10.192C82.55 10.192 83.078 10.432 83.622 10.912C84.166 11.36 84.438 11.84 84.438 12.352C84.438 12.832 84.23 13.2 83.814 13.456C83.43 13.712 82.982 13.84 82.47 13.84C81.958 13.84 81.51 13.616 81.126 13.168C80.774 12.688 80.598 12.176 80.598 11.632C80.598 10.672 81.078 10.192 82.038 10.192Z" fill="currentColor"></path>
+            <path d="M91.0602 29.632C92.7882 28.928 94.1482 28.192 95.1402 27.424C96.1322 26.624 97.3482 25.472 98.7882 23.968C100.228 22.464 101.172 21.52 101.62 21.136C103.156 19.792 104.788 19.12 106.516 19.12C107.572 19.12 108.724 19.376 109.972 19.888C111.252 20.4 112.436 21.312 113.524 22.624C114.612 23.936 115.156 25.504 115.156 27.328C115.156 29.12 114.1 30.688 111.988 32.032C109.876 33.344 107.092 34 103.636 34C102.676 34 102.196 33.52 102.196 32.56C102.196 31.6 102.676 31.12 103.636 31.12C106.26 31.12 108.356 30.704 109.924 29.872C111.492 29.008 112.276 28.144 112.276 27.28C112.276 26.096 111.892 25.072 111.124 24.208C109.78 22.736 108.244 22 106.516 22C105.524 22 104.548 22.416 103.588 23.248C103.3 23.504 102.372 24.432 100.804 26.032C99.2682 27.632 97.9882 28.832 96.9642 29.632C95.9722 30.432 94.8202 31.12 93.5082 31.696C92.2282 32.272 91.4122 32.56 91.0602 32.56C90.1002 32.56 89.6202 32.08 89.6202 31.12C89.6202 30.512 90.1002 30.016 91.0602 29.632Z" fill="currentColor"></path>
+            <path d="M124.278 30.352C124.79 30.352 125.318 30.576 125.862 31.024C126.406 31.472 126.678 31.952 126.678 32.464C126.678 32.976 126.454 33.36 126.006 33.616C125.59 33.872 125.126 34 124.614 34C124.102 34 123.67 33.776 123.318 33.328C122.998 32.848 122.838 32.336 122.838 31.792C122.838 30.832 123.318 30.352 124.278 30.352Z" fill="var(--color-accent)"></path>
+          </svg>
+        </a>
+        <span class="text-muted footer-copy" data-i18n="footerCopy">Alguns direitos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/main.js"></script>
 </body>
 
 </html>
