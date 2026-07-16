@@ -2,6 +2,7 @@
    Implements the "Portfolio QA.dc.html" design from claude.ai/design. */
 
 html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
 body { transition: background-color .35s ease, color .35s ease; }
 
 /* — light theme — */
@@ -104,16 +105,14 @@ body[data-theme="light"] .theme-toggle .icon-moon { display: block; }
   -webkit-mask-image: radial-gradient(ellipse 75% 85% at 65% 40%, rgba(0,0,0,.5), transparent 70%);
   mask-image: radial-gradient(ellipse 75% 85% at 65% 40%, rgba(0,0,0,.5), transparent 70%);
 }
-.hero-particles { position: absolute; inset: 0; pointer-events: none; }
-.hero-particles span { position: absolute; border-radius: 50%; }
-.hero-particles span:nth-child(1) { left: 8%; top: 22%; width: 5px; height: 5px; background: var(--color-accent); opacity: .35; animation: cq-float 7s ease-in-out infinite; }
-.hero-particles span:nth-child(2) { left: 22%; top: 68%; width: 3px; height: 3px; background: var(--color-accent-400); opacity: .3; animation: cq-float 9s ease-in-out 1s infinite; }
-.hero-particles span:nth-child(3) { left: 45%; top: 14%; width: 4px; height: 4px; background: var(--color-accent-300); opacity: .25; animation: cq-float 8s ease-in-out .5s infinite; }
-.hero-particles span:nth-child(4) { left: 60%; top: 78%; width: 6px; height: 6px; background: var(--color-accent); opacity: .2; animation: cq-float 10s ease-in-out 2s infinite; }
-.hero-particles span:nth-child(5) { left: 78%; top: 18%; width: 3px; height: 3px; background: var(--color-accent-400); opacity: .35; animation: cq-float 6.5s ease-in-out 1.4s infinite; }
-.hero-particles span:nth-child(6) { left: 90%; top: 55%; width: 4px; height: 4px; background: var(--color-accent-300); opacity: .3; animation: cq-float 8.5s ease-in-out .8s infinite; }
-.hero-particles span:nth-child(7) { left: 35%; top: 88%; width: 3px; height: 3px; background: var(--color-accent); opacity: .25; animation: cq-float 7.5s ease-in-out 2.4s infinite; }
 .hero-spotlight { position: absolute; inset: 0; pointer-events: none; }
+
+/* — vento global de partículas (canvas fixo atrás do conteúdo) — */
+.wind-canvas {
+  position: fixed; inset: 0; width: 100%; height: 100%;
+  z-index: -1; pointer-events: none; opacity: .85;
+}
+body[data-theme="light"] .wind-canvas { opacity: .55; }
 .hero-inner {
   position: relative; max-width: 1120px; margin: 0 auto; padding: 88px 24px 72px;
   display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: center;
@@ -147,8 +146,18 @@ body[data-theme="light"] .theme-toggle .icon-moon { display: block; }
   background: radial-gradient(circle, color-mix(in srgb, var(--color-accent) 30%, transparent), transparent 70%);
   filter: blur(18px); animation: cq-pulse 5s ease-in-out infinite;
 }
-.hero-photo { position: absolute; inset: 0; width: 296px; height: 394px; object-fit: cover; border-radius: 20px; }
-.corner { position: absolute; width: 30px; height: 30px; pointer-events: none; }
+.hero-photo { position: absolute; inset: 0; width: 296px; height: 394px; object-fit: cover; border-radius: 20px; z-index: 1; transition: opacity .6s ease; }
+
+/* — modelo 3D wireframe no lugar da foto — */
+.hero-model-canvas {
+  position: absolute; inset: -14% -26%; width: 152%; height: 128%;
+  z-index: 2; pointer-events: none;
+  opacity: 0; transform: scale(.97);
+  transition: opacity .8s ease, transform 1s cubic-bezier(.2,.7,.2,1);
+}
+.hero-photo-wrap.is-3d-ready .hero-model-canvas { opacity: 1; transform: none; }
+.hero-photo-wrap.is-3d-ready .hero-photo { opacity: 0; }
+.corner { position: absolute; width: 30px; height: 30px; pointer-events: none; z-index: 3; }
 .corner-tl { top: -11px; left: -11px; border-top: 2px solid var(--color-accent); border-left: 2px solid var(--color-accent); border-radius: 8px 0 0 0; }
 .corner-tr { top: -11px; right: -11px; border-top: 2px solid var(--color-accent); border-right: 2px solid var(--color-accent); border-radius: 0 8px 0 0; }
 .corner-bl { bottom: -11px; left: -11px; border-bottom: 2px solid var(--color-accent); border-left: 2px solid var(--color-accent); border-radius: 0 0 0 8px; }
@@ -158,7 +167,7 @@ body[data-theme="light"] .theme-toggle .icon-moon { display: block; }
   padding: 6px 13px; border-radius: 999px;
   background: var(--color-surface); box-shadow: var(--shadow-md);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px;
-  color: var(--color-accent-300); pointer-events: none;
+  color: var(--color-accent-300); pointer-events: none; z-index: 3;
 }
 .fb-1 { top: 14px; right: -44px; animation: cq-float 7s ease-in-out infinite; }
 .fb-2 { top: 64px; left: -30px; animation: cq-float 9s ease-in-out 1.2s infinite; }
@@ -187,8 +196,22 @@ body[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 .t-line-4 { color: var(--color-text); animation: cq-l4 8s linear infinite; }
 .term-dot { color: var(--color-accent); animation: cq-blink 1.4s step-end infinite; display: inline-block; }
 
+/* — decorações wireframe nas áreas vazias — */
+.wire-decor {
+  position: absolute; z-index: -1; width: 460px; max-width: 44vw;
+  pointer-events: none; opacity: .17;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+}
+.wire-decor img { width: 100%; height: auto; display: block; }
+.wire-decor-right { right: 0; transform: translateX(46%); }
+.wire-decor-left { left: 0; transform: translateX(-46%); }
+body[data-theme="light"] .wire-decor { opacity: .12; }
+@media (max-width: 1100px) { .wire-decor { display: none; } }
+@media (prefers-reduced-motion: reduce) { .wire-decor { opacity: .1; } }
+
 /* — sections — */
-.section { max-width: 1120px; margin: 0 auto; padding: 64px 24px 24px; scroll-margin-top: 70px; }
+.section { position: relative; max-width: 1120px; margin: 0 auto; padding: 64px 24px 24px; scroll-margin-top: 70px; }
 #projetos { padding-top: 24px; }
 .kicker {
   font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
@@ -280,7 +303,7 @@ body[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 .course-hours { flex: none; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--color-accent); }
 
 /* — contato / footer — */
-.footer { margin-top: 88px; border-top: 1px solid var(--color-divider); scroll-margin-top: 70px; }
+.footer { position: relative; margin-top: 88px; border-top: 1px solid var(--color-divider); scroll-margin-top: 70px; }
 .footer-inner { max-width: 1120px; margin: 0 auto; padding: 72px 24px 40px; text-align: center; }
 .footer .kicker { margin-bottom: 10px; }
 .contact-title { font-size: 38px; margin: 0 0 12px; }
@@ -322,7 +345,7 @@ body[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 /* — reduced motion — */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-title, .photo-glow, .float-badge, .hero-particles span,
+  .hero-title, .photo-glow, .float-badge,
   .typed-cursor, .term-dot,
   .t-line-1, .t-line-2, .t-line-3, .t-line-4 { animation: none; }
 }

@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="./css/nocturne.css">
   <link rel="stylesheet" href="./css/portfolio.css">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.min.js" } }
+  </script>
 </head>
 
 <body data-theme="dark">
@@ -67,9 +70,6 @@
   <!-- ══ Hero ══ -->
   <header id="home" class="hero">
     <div class="hero-bg-grid" aria-hidden="true"></div>
-    <div class="hero-particles" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-    </div>
     <div class="hero-spotlight" aria-hidden="true"></div>
     <div class="hero-inner">
       <div>
@@ -391,6 +391,7 @@
   </footer>
 
   <script src="./js/main.js"></script>
+  <script type="module" src="./js/hero-3d.js"></script>
 </body>
 
 </html>
